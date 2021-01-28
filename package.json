@@ -1,0 +1,44 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "npm run development -- --watch",
+        "watch-poll": "npm run watch -- --watch-poll",
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "prod": "npm run production",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    },
+    "devDependencies": {
+        "axios": "^0.19",
+        "bootstrap": "^4.5.2",
+        "cross-env": "^7.0",
+        "jquery": "^3.2",
+        "laravel-mix": "^5.0.1",
+        "lodash": "^4.17.13",
+        "popper.js": "^1.12",
+        "resolve-url-loader": "^2.3.1",
+        "sass": "^1.20.1",
+        "sass-loader": "^8.0.0",
+        "vue": "^2.6.12",
+        "vue-template-compiler": "^2.6.12"
+    },
+    "dependencies": {
+        "@popperjs/core": "^2.4.4",
+        "@websanova/vue-auth": "^3.3.1",
+        "apollo-cache-inmemory": "^1.6.6",
+        "apollo-client": "^2.6.10",
+        "apollo-link-error": "^1.1.13",
+        "apollo-link-http": "^1.5.17",
+        "bootstrap-vue": "^2.17.3",
+        "graphql": "^15.4.0",
+        "graphql-tag": "^2.11.0",
+        "path-to-regexp": "^6.2.0",
+        "portal-vue": "^2.1.7",
+        "vue-apollo": "^3.0.5",
+        "vue-multiselect": "^2.1.6",
+        "vue-router": "^3.3.4",
+        "vuelidate": "^0.7.6",
+        "vuex": "^3.4.0"
+    }
+}

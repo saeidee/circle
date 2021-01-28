@@ -1,0 +1,42 @@
+.points-right{
+    position: absolute;
+    top: calc(50% - 15px);
+    right: -4px;
+    border-radius: 3px;
+    width: 30px;
+    height: 30px;
+    content: '';
+    background: #faf5ff;
+    transform: rotate(45deg);
+}
+
+.pointed-from-left{
+    left: -25px;
+    position: absolute;
+    top: calc(50% - 15px);
+    border-radius: 3px;
+    width: 30px;
+    height: 30px;
+    content: '';
+    background: #e2e8f0;
+    transform: rotate(45deg);
+}
+
+.router-link-active{
+    background: #EBF4FF;
+    color: #4C51BF;
+}
+
+@media (max-width: 640px) {
+    .points-right {
+        left: calc(50% - 15px);
+        top: inherit;
+        bottom: -4px;
+        right: 0;
+    }
+
+    .pointed-from-left{
+        top: -25px;
+        left: calc(50% - 15px);
+    }
+}

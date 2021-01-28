@@ -1,0 +1,65 @@
+version: '2'
+services:
+    circle-fpm:
+        container_name: circle-fpm
+        build: ./Dockerfiles
+        restart: unless-stopped
+        environment:
+            DB_HOST: circle-mysql
+            DB_DATABASE: circle_db
+            DB_USERNAME: circle
+            DB_PASSWORD: cir55cle77
+            DB_CONNECTION: mysql
+        links:
+            - circle-mysql
+            - circle-redis
+        volumes:
+            - ./:/var/www
+            - ./Dockerfiles/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+        networks:
+            - app-network
+
+    circle-nginx:
+        container_name: circle-nginx
+        image: nginx:alpine
+        restart: unless-stopped
+        tty: true
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - ./:/var/www
+            - ./Dockerfiles/nginx/conf.d/:/etc/nginx/conf.d/
+        networks:
+            - app-network
+
+    circle-mysql:
+        container_name: circle-mysql
+        image: mysql:latest
+        restart: unless-stopped
+        ports:
+            - 3306:3306
+        command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci', '--default-authentication-plugin=mysql_native_password']
+        volumes:
+            - .docker/data/mysql:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: circle_db
+            MYSQL_USER: circle
+            MYSQL_PASSWORD: cir55cle77
+            MYSQL_ROOT_PASSWORD: cir55cle77
+        networks:
+            - app-network
+
+    circle-redis:
+        container_name: circle-redis
+        image: redis:latest
+        restart: unless-stopped
+        ports:
+            - 6379:6379
+        volumes:
+            - .docker/data/redis:/data
+        networks:
+            - app-network
+networks:
+    app-network:
+        driver: bridge
