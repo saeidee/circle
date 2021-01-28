@@ -34,6 +34,9 @@ RUN pecl install -o -f redis \
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash
 RUN apt-get install nodejs npm -y
 
+# install pcov for code coverage
+RUN pecl install pcov && docker-php-ext-enable pcov
+
 # # Add user for laravel application
 # RUN groupadd -g 1000 www
 # RUN useradd -u 1000 -ms /bin/bash -g www www
