@@ -9,11 +9,11 @@ use Illuminate\Foundation\Testing\WithFaker;
 use App\ValueObjects\Payloads\CampaignPayload;
 
 /**
- * Class CreateCampaignPayloadTest
+ * Class CampaignPayloadTest
  * @package Tests\Unit\ValueObjects\Payloads
  * @coversDefaultClass \App\ValueObjects\Payloads\CampaignPayload
  */
-class CreateCampaignPayloadTest extends TestCase
+class CampaignPayloadTest extends TestCase
 {
     use WithFaker;
 

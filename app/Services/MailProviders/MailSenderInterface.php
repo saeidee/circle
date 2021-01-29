@@ -5,7 +5,7 @@ namespace App\Services\MailProviders;
 use Illuminate\Support\Collection;
 
 /**
- * Interface AbstractRequestCollection
+ * Interface MailSenderInterface
  * @package App\Services\MailProviders
  */
 interface MailSenderInterface
