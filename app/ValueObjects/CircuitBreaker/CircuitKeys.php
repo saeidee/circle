@@ -1,16 +1,15 @@
 <?php
 
-namespace App\ValueObjects\Circuit;
+namespace App\ValueObjects\CircuitBreaker;
 
 /**
  * Class CircuitKeys
- * @package App\ValueObjects\Circuit
+ * @package App\ValueObjects\CircuitBreaker
  */
 final class CircuitKeys
 {
     const OPEN_KEY = ':circuit:open';
     const ATTEMPT_KEY = ':circuit:attempts';
-    const UNAVAILABLE_KEY = ':circuit:unavailable';
 
     /** @var string */
     private $prefix;
@@ -35,15 +34,7 @@ final class CircuitKeys
     /**
      * @return string
      */
-    public function getUnavailableKey(): string
-    {
-        return $this->prefix . self::UNAVAILABLE_KEY;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAttemptKeys(): string
+    public function getAttemptKey(): string
     {
         return $this->prefix . self::ATTEMPT_KEY;
     }

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\ValueObjects\Circuit;
+namespace App\ValueObjects\CircuitBreaker;
 
 use App\Enums\CircuitStatusEnums;
 
 /**
  * Class CircuitStatus
- * @package App\ValueObjects\Circuit
+ * @package App\ValueObjects\CircuitBreaker
  */
 final class CircuitStatus
 {
