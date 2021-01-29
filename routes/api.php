@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['namespace' => 'API\V1', 'middleware' => ['api'], 'prefix' => 'v1'], function (Router $route) {
-    $route->get('campaigns', 'CampaignController@index');
+Route::group(['namespace' => 'API\V1', 'prefix' => 'v1'], function (Router $route) {
+    $route->get('/campaigns', 'CampaignController@index');
+    $route->post('/campaigns', 'CampaignController@store');
 });

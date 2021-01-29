@@ -176,6 +176,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\RepositoryServiceProvider::class,
 
     ],
 
@@ -231,4 +232,8 @@ return [
 
     ],
 
+
+    // Custom environmental variables
+
+    'initial_email_provider' => env('INITIAL_EMAIL_PROVIDER', 'sendgrid')
 ];

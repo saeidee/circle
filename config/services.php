@@ -35,4 +35,21 @@ return [
         'secret' => env('PASSWORD_CLIENT_SECRET'),
     ],
 
+    'sendgrid' => [
+        'endpoints' => [
+            'send_email' => 'https://api.sendgrid2.com/v3/mail/send',
+        ],
+        'secret' => env('SENDGRID_SECRET'),
+    ],
+
+    'mailjet' => [
+        'endpoints' => [
+            'send_email' => 'https://api.mailjet.com/v3.1/send',
+        ],
+        'secret' => env('MAILJET_SECRET'),
+    ],
+
+    'slack' => [
+        'endpoint' => env('SLACK_HOST'),
+    ],
 ];
