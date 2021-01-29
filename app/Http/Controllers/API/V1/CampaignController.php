@@ -2,7 +2,15 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use Illuminate\Http\JsonResponse;
+use App\Jobs\CampaignSenderManager;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Queue;
+use App\Http\Resources\CampaignResource;
+use App\ValueObjects\Payloads\CampaignPayload;
+use App\Http\Requests\API\V1\SendCampaignRequest;
+use App\Repositories\Campaign\CampaignRepositoryInterface;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
  * Class CampaignController
@@ -11,14 +19,27 @@ use App\Http\Controllers\Controller;
 class CampaignController extends Controller
 {
     /**
-     * CampaignController constructor.
+     * @param CampaignRepositoryInterface $campaignRepository
+     * @return AnonymousResourceCollection
      */
-    public function __construct()
+    public function index(CampaignRepositoryInterface $campaignRepository): AnonymousResourceCollection
     {
+        return CampaignResource::collection($campaignRepository->paginate());
     }
 
-    public function index()
+    /**
+     * @param SendCampaignRequest $request
+     * @return JsonResponse
+     */
+    public function store(SendCampaignRequest $request): JsonResponse
     {
-        dd(1);
+        Queue::push(
+            new CampaignSenderManager(
+                config('app.initial_email_provider'),
+                new CampaignPayload($request->validated())
+            )
+        );
+
+        return $this->success('Successfully CampaignResource created');
     }
 }

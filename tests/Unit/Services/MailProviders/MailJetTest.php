@@ -35,12 +35,13 @@ class MailJetTest extends TestCase
     {
         parent::setUp();
 
+        $id = $this->faker->uuid;
         $subject = $this->faker->text(20);
         $from = new Contact($this->faker->name, $this->faker->email);
         $to = [new Contact($this->faker->name, $this->faker->email)];
         $replyTo = new Contact($this->faker->name, $this->faker->email);
         $content = new MailContent(self::HTML, $this->faker->text);
-        $this->mail = new Mail($subject, $from, $to, $replyTo, $content);
+        $this->mail = new Mail($id, $subject, $from, $to, $replyTo, $content);
         $this->mailJet = new MailJet($this->mail);
     }
 
@@ -78,7 +79,7 @@ class MailJetTest extends TestCase
                     'Subject' => $this->mail->getSubject(),
                     'TextPart' => '',
                     'HTMLPart' => $this->mail->getContent()->getValue(),
-                    'CustomID' => 'AppGettingStartedTest'
+                    'CustomID' => $this->mail->getId(),
                 ],
             ],
         ]);
@@ -94,6 +95,7 @@ class MailJetTest extends TestCase
     {
         $content = new MailContent(self::TEXT, $this->faker->text);
         $mail = new Mail(
+            $this->mail->getId(),
             $this->mail->getSubject(),
             $this->mail->getFrom(),
             $this->mail->getTo(),
@@ -120,7 +122,7 @@ class MailJetTest extends TestCase
                     'Subject' => $mail->getSubject(),
                     'TextPart' => $mail->getContent()->getValue(),
                     'HTMLPart' => '',
-                    'CustomID' => 'AppGettingStartedTest'
+                    'CustomID' => $this->mail->getId(),
                 ],
             ],
         ]);

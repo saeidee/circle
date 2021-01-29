@@ -6,9 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
- * Class Campaign
- * @package App
- * @property string password
+ * Class CampaignResource
+ * @package App\Models
  */
 class User extends Authenticatable
 {

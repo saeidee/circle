@@ -2,36 +2,45 @@
 
 namespace App\Models;
 
-use App\Traits\HasPartner;
+use App\Enums\CampaignStatus;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * Class Campaign
+ * Class CampaignResource
  * @package App\Models
+ * @property int id
+ * @property string name
+ * @property string content
+ * @property string type
+ * @property int status
+ * @property string provider
  */
 class Campaign extends Model
 {
-    use SoftDeletes, HasPartner;
-
     protected $table = 'campaigns';
-    protected $guarded = [];
+    protected $fillable = ['uuid', 'name', 'content', 'type', 'status', 'provider'];
 
     /**
-     * @return belongsToMany
+     * @param string $provider
+     * @return void
      */
-    public function products(): belongsToMany
+    public function markAsSent(string $provider): void
     {
-        return $this->belongsToMany(Product::class, 'campaign_product');
+        $this->provider = $provider;
+        $this->status = CampaignStatus::SENT;
+
+        $this->save();
     }
 
     /**
-     * @return BelongsTo
+     * @param string $provider
+     * @return void
      */
-    public function partner(): BelongsTo
+    public function markAsFailed(string $provider): void
     {
-        return $this->belongsTo(Partner::class);
+        $this->provider = $provider;
+        $this->status = CampaignStatus::FAILED;
+
+        $this->save();
     }
 }

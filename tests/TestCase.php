@@ -26,4 +26,31 @@ abstract class TestCase extends BaseTestCase
 
         return $method->invokeArgs($object, $parameters);
     }
+
+    /**
+     * @param mixed $object
+     * @param string $property
+     * @param mixed $value
+     * @throws ReflectionException
+     */
+    public function assertProperty($object, string $property, $value)
+    {
+        $this->assertEquals($value, $this->getPrivateProperty($object, $property));
+    }
+
+    /**
+     * For getting private or protected property of an object
+     * @param mixed $object
+     * @param string $property
+     * @return mixed
+     * @throws ReflectionException
+     */
+    public function getPrivateProperty($object, string $property)
+    {
+        $reflection = new ReflectionClass($object);
+        $reflectionProperty = $reflection->getProperty($property);
+        $reflectionProperty->setAccessible(true);
+
+        return $reflectionProperty->getValue($object);
+    }
 }

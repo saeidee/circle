@@ -7,7 +7,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class CampaignRepository
- * @package App\Repositories\Campaign
+ * @package App\Repositories\CampaignResource
  */
 class CampaignRepository implements CampaignRepositoryInterface
 {
@@ -38,5 +38,14 @@ class CampaignRepository implements CampaignRepositoryInterface
     public function create(array $fields): void
     {
         $this->campaign->create($fields);
+    }
+
+    /**
+     * @param string $uuid
+     * @return Campaign|null
+     */
+    public function findByUuid(string $uuid): ?Campaign
+    {
+        return $this->campaign->where('uuid', $uuid)->first();
     }
 }

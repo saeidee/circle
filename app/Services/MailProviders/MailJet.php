@@ -66,7 +66,7 @@ class MailJet implements MailSenderInterface
               'Subject' => $this->mail->getSubject(),
               'TextPart' => $textPart,
               'HTMLPart' => $htmlPart,
-              'CustomID' => 'AppGettingStartedTest'
+              'CustomID' => $this->mail->getId(),
             ],
           ],
         ]);

@@ -2,10 +2,17 @@
 
 namespace App\Providers;
 
+use App\Events\CampaignFailed;
+use App\Events\CampaignSent;
+use App\Listeners\LogCampaignFailed;
+use App\Listeners\LogCampaignSent;
 use Illuminate\Auth\Events\Registered;
+use App\Listeners\NotifyCircuitEvent;
+use App\Events\CircuitBreaker\CircuitClosed;
+use App\Events\CircuitBreaker\CircuitOpened;
+use App\Events\CircuitBreaker\CircuitMaxAttemptReached;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 /**
  * Class EventServiceProvider
@@ -21,6 +28,21 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        CircuitOpened::class => [
+            NotifyCircuitEvent::class,
+        ],
+        CircuitClosed::class => [
+            NotifyCircuitEvent::class,
+        ],
+        CircuitMaxAttemptReached::class => [
+            NotifyCircuitEvent::class,
+        ],
+        CampaignSent::class => [
+            LogCampaignSent::class,
+        ],
+        CampaignFailed::class => [
+            LogCampaignFailed::class,
         ],
     ];
 

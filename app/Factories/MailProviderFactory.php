@@ -25,6 +25,7 @@ class MailProviderFactory
     public function make(string $provider, CampaignPayload $campaignPayload): MailSenderInterface
     {
         $mail = new Mail(
+            $campaignPayload->getId(),
             $campaignPayload->getSubject(),
             $campaignPayload->getFrom(),
             $campaignPayload->getTo(),

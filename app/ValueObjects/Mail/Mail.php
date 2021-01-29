@@ -11,6 +11,8 @@ use App\Entities\Contact;
 final class Mail
 {
     /*** @var string */
+    private $id;
+    /*** @var string */
     private $subject;
     /*** @var Contact */
     private $to;
@@ -23,19 +25,35 @@ final class Mail
 
     /**
      * Mail constructor.
+     * @param string $id
      * @param string $subject
      * @param Contact $from
      * @param Contact[]|array $to
      * @param Contact $replyTo
      * @param MailContent $content
      */
-    public function __construct(string $subject, Contact $from, array $to, Contact $replyTo, MailContent $content)
-    {
+    public function __construct(
+        string $id,
+        string $subject,
+        Contact $from,
+        array $to,
+        Contact $replyTo,
+        MailContent $content
+    ) {
+        $this->id = $id;
         $this->to = $to;
         $this->from = $from;
         $this->subject = $subject;
         $this->content = $content;
         $this->replyTo = $replyTo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->id;
     }
 
     /**

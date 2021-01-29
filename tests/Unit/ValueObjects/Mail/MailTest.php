@@ -18,6 +18,8 @@ class MailTest extends TestCase
     use WithFaker;
 
     /*** @var string */
+    private $id;
+    /*** @var string */
     private $subject;
     /*** @var Contact */
     private $to;
@@ -37,17 +39,27 @@ class MailTest extends TestCase
     {
         parent::setUp();
 
+        $this->id = $this->faker->uuid;
         $this->subject = $this->faker->text(20);
         $this->from = new Contact($this->faker->name, $this->faker->email);
         $this->to = [new Contact($this->faker->name, $this->faker->email)];
         $this->replyTo = new Contact($this->faker->name, $this->faker->email);
         $this->content = new MailContent($this->faker->randomElement(['text/html', 'text/plain']), $this->faker->text);
-        $this->mail = new Mail($this->subject, $this->from, $this->to, $this->replyTo, $this->content);
+        $this->mail = new Mail($this->id, $this->subject, $this->from, $this->to, $this->replyTo, $this->content);
     }
 
     /**
      * @test
      * @covers ::__construct
+     * @covers ::getId
+     */
+    function it_should_return_mail_id()
+    {
+        $this->assertEquals($this->id, $this->mail->getId());
+    }
+
+    /**
+     * @test
      * @covers ::getSubject
      */
     function it_should_return_mail_subject()

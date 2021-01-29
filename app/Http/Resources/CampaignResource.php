@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Http\Resources;
+
+use App\Enums\CampaignStatus;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+/**
+ * Class CampaignResource
+ * @package App\Http\Resources
+ * @property int id
+ * @property string name
+ * @property string type
+ * @property string content
+ * @property int status
+ * @property string provider
+ */
+class CampaignResource extends JsonResource
+{
+    const STATUSES = [
+        CampaignStatus::FAILED => 'Failed',
+        CampaignStatus::QUEUED => 'Queued',
+        CampaignStatus::SENT => 'Sent',
+    ];
+
+    /**
+     * @param Request  $request
+     * @return array
+     */
+    public function toArray($request): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'type' => $this->type,
+            'content' => $this->content,
+            'status' => self::STATUSES[$this->status],
+            'provider' => $this->provider,
+        ];
+    }
+}

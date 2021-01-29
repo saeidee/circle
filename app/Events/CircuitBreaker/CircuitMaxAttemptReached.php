@@ -2,19 +2,19 @@
 
 namespace App\Events\CircuitBreaker;
 
-use App\Events\CircuitBreaker\AbstractCircuitEvent;
-
 /**
  * Class CircuitMaxAttemptReached
  * @package App\Events
  */
 class CircuitMaxAttemptReached extends AbstractCircuitEvent
 {
+    const TYPE = 'MAX ATTEMPT';
+
     /**
      * @return string
      */
     public function getType(): string
     {
-        return 'MAX ATTEMPT';
+        return self::TYPE;
     }
 }

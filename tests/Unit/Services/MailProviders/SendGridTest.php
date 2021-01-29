@@ -35,12 +35,13 @@ class SendGridTest extends TestCase
     {
         parent::setUp();
 
+        $id = $this->faker->uuid;
         $subject = $this->faker->text(20);
         $from = new Contact($this->faker->name, $this->faker->email);
         $to = [new Contact($this->faker->name, $this->faker->email)];
         $replyTo = new Contact($this->faker->name, $this->faker->email);
         $content = new MailContent($this->faker->randomElement([self::HTML, self::TEXT]), $this->faker->text);
-        $this->mail = new Mail($subject, $from, $to, $replyTo, $content);
+        $this->mail = new Mail($id, $subject, $from, $to, $replyTo, $content);
         $this->sendGrid = new SendGrid($this->mail);
     }
 
@@ -74,7 +75,7 @@ class SendGridTest extends TestCase
             'from' => $this->mail->getFrom()->toArray(),
             'reply_to' => $this->mail->getReplyTo()->toArray(),
             'content' => [$this->mail->getContent()->toArray()],
-            'categories' => ['123'],
+            'categories' => [$this->mail->getId()],
         ]);
 
         $this->assertEquals($expected, $this->sendGrid->getParameters());

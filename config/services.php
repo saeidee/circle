@@ -37,7 +37,7 @@ return [
 
     'sendgrid' => [
         'endpoints' => [
-            'send_email' => 'https://api.sendgrid2.com/v3/mail/send',
+            'send_email' => 'https://api.sendgrid.com/v3/mail/send',
         ],
         'secret' => env('SENDGRID_SECRET'),
     ],

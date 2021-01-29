@@ -10,7 +10,7 @@ use App\Repositories\Campaign\CampaignRepository;
 
 /**
  * Class CampaignRepositoryTest
- * @package Tests\Unit\Repositories\Campaign
+ * @package Tests\Unit\Repositories\CampaignResource
  * @coversDefaultClass \App\Repositories\Campaign\CampaignRepository
  */
 class CampaignRepositoryTest extends TestCase
@@ -29,7 +29,9 @@ class CampaignRepositoryTest extends TestCase
     {
         parent::setUp();
 
-        $this->campaign = $this->getMockBuilder(Campaign::class)->addMethods(['paginate', 'create'])->getMock();
+        $this->campaign = $this->getMockBuilder(Campaign::class)
+            ->addMethods(['paginate', 'create', 'where'])
+            ->getMock();
         $this->campaignRepository = new CampaignRepository($this->campaign);
     }
 
@@ -58,5 +60,40 @@ class CampaignRepositoryTest extends TestCase
         $this->campaign->expects($this->once())->method('create')->with($fields);
 
         $this->campaignRepository->create($fields);
+    }
+
+    /**
+     * @test
+     * @covers ::findByUuid
+     */
+    function it_should_find_campaign_by_uuid()
+    {
+        $campaign = new Campaign();
+        $uuid = $this->faker->uuid;
+
+        $this->campaign
+            ->expects($this->once())
+            ->method('where')
+            ->with('uuid', $uuid)
+            ->willReturn(collect([$campaign]));
+
+        $this->assertEquals($campaign, $this->campaignRepository->findByUuid($uuid));
+    }
+
+    /**
+     * @test
+     * @covers ::findByUuid
+     */
+    function it_should_return_null_when_the_campaign_not_exist_with_the_given_uuid()
+    {
+        $uuid = $this->faker->uuid;
+
+        $this->campaign
+            ->expects($this->once())
+            ->method('where')
+            ->with('uuid', $uuid)
+            ->willReturn(collect([null]));
+
+        $this->assertNull($this->campaignRepository->findByUuid($uuid));
     }
 }

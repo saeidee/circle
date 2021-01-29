@@ -37,6 +37,7 @@ class MailProviderFactoryTest extends TestCase
         ];
         $campaignPayload = new CampaignPayload($parameters);
         $mail = new Mail(
+            $campaignPayload->getId(),
             $campaignPayload->getSubject(),
             $campaignPayload->getFrom(),
             $campaignPayload->getTo(),
@@ -62,6 +63,7 @@ class MailProviderFactoryTest extends TestCase
         ];
         $campaignPayload = new CampaignPayload($parameters);
         $mail = new Mail(
+            $campaignPayload->getId(),
             $campaignPayload->getSubject(),
             $campaignPayload->getFrom(),
             $campaignPayload->getTo(),
