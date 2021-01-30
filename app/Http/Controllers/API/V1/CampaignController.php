@@ -35,7 +35,7 @@ class CampaignController extends Controller
     {
         Queue::push(
             new CampaignSenderManager(
-                config('app.initial_email_provider'),
+                config('app.initial_preferred_mail_provider'),
                 new CampaignPayload($request->validated())
             )
         );

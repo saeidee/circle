@@ -12,6 +12,10 @@ use App\Http\Requests\API\V1\SendCampaignRequest;
  */
 class SendCampaignRequestTest extends TestCase
 {
+    const TEXT = 'text/plain';
+    const HTML = 'text/html';
+    const EMAIL_TYPES = [self::TEXT, self::HTML];
+
     /**
      * @test
      * @covers ::rules
@@ -48,7 +52,7 @@ class SendCampaignRequestTest extends TestCase
             ['to.*.email', 'required|email'],
             ['replyTo.name', 'required|string'],
             ['replyTo.email', 'required|email'],
-            ['content.type', 'required|in:text/html,text/plain'],
+            ['content.type', 'required|in:' . implode(',', self::EMAIL_TYPES)],
             ['content.value', 'required|string'],
         ];
     }

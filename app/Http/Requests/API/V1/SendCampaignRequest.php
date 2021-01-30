@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API\V1;
 
+use App\Enums\EmailTypeEnums;
 use App\Http\Requests\Request;
 
 /**
@@ -25,7 +26,7 @@ class SendCampaignRequest extends Request
             'to.*.email' => 'required|email',
             'replyTo.name' => 'required|string',
             'replyTo.email' => 'required|email',
-            'content.type' => 'required|in:text/html,text/plain',
+            'content.type' => 'required|in:' . implode(',',EmailTypeEnums::ALL),
             'content.value' => 'required|string',
         ];
     }

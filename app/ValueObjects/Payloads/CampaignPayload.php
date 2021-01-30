@@ -2,10 +2,10 @@
 
 namespace App\ValueObjects\Payloads;
 
+use Ramsey\Uuid\Uuid;
 use App\Entities\Contact;
 use Illuminate\Support\Arr;
 use App\ValueObjects\Mail\MailContent;
-use Ramsey\Uuid\Uuid;
 
 /**
  * Class CampaignPayload
@@ -34,7 +34,10 @@ final class CampaignPayload
      */
     public function getFrom(): Contact
     {
-        return new Contact(Arr::get($this->parameters, 'from.name'), Arr::get($this->parameters, 'from.email'));
+        return new Contact(
+            Arr::get($this->parameters, 'from.name'),
+            Arr::get($this->parameters, 'from.email')
+        );
     }
 
     /**
@@ -55,7 +58,10 @@ final class CampaignPayload
      */
     public function getReplyTo(): Contact
     {
-        return new Contact(Arr::get($this->parameters, 'replyTo.name'), Arr::get($this->parameters, 'replyTo.email'));
+        return new Contact(
+            Arr::get($this->parameters, 'replyTo.name'),
+            Arr::get($this->parameters, 'replyTo.email')
+        );
     }
 
     /**
@@ -107,5 +113,34 @@ final class CampaignPayload
     private function generateId(): void
     {
         $this->id = Uuid::uuid1();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValid(): bool
+    {
+        if (!Arr::has($this->parameters, 'to')) {
+            return false;
+        }
+
+        $areRecipientsValid = array_filter(
+            Arr::get($this->parameters, 'to'),
+            function ($recipient) {
+                return Arr::accessible($recipient)
+                    && Arr::get($recipient, 'name')
+                    && Arr::get($recipient, 'email');
+            }
+        );
+
+        return $areRecipientsValid
+            && Arr::get($this->parameters, 'campaign')
+            && Arr::get($this->parameters, 'subject')
+            && Arr::get($this->parameters, 'from.email')
+            && Arr::get($this->parameters, 'from.name')
+            && Arr::get($this->parameters, 'replyTo.email')
+            && Arr::get($this->parameters, 'replyTo.name')
+            && Arr::get($this->parameters, 'content.type')
+            && Arr::get($this->parameters, 'content.value');
     }
 }

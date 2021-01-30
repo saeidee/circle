@@ -17,10 +17,13 @@ class CampaignResourceTest extends TestCase
 {
     use WithFaker;
 
+    const FAILED = 0;
+    const QUEUED = 1;
+    const SENT = 2;
     const STATUSES = [
-        CampaignStatus::FAILED => 'Failed',
-        CampaignStatus::QUEUED => 'Queued',
-        CampaignStatus::SENT => 'Sent',
+        self::FAILED => 'failed',
+        self::QUEUED => 'queued',
+        self::SENT => 'sent',
     ];
 
     /**

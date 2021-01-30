@@ -19,9 +19,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class CampaignResource extends JsonResource
 {
     const STATUSES = [
-        CampaignStatus::FAILED => 'Failed',
-        CampaignStatus::QUEUED => 'Queued',
-        CampaignStatus::SENT => 'Sent',
+        CampaignStatus::FAILED => 'failed',
+        CampaignStatus::QUEUED => 'queued',
+        CampaignStatus::SENT => 'sent',
     ];
 
     /**
