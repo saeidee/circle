@@ -4,7 +4,6 @@ namespace Tests\Unit\Resources;
 
 use Tests\TestCase;
 use App\Models\Campaign;
-use App\Enums\CampaignStatus;
 use App\Http\Resources\CampaignResource;
 use Illuminate\Foundation\Testing\WithFaker;
 
@@ -32,20 +31,14 @@ class CampaignResourceTest extends TestCase
      */
     function it_should_return_resource_as_array()
     {
-        $campaign = new Campaign([
-            'id' => $this->faker->randomDigitNotNull,
-            'name' => $this->faker->name,
-            'type' => $this->faker->randomElement(['text/plain', 'text/html']),
-            'content' => $this->faker->text,
-            'status' => $this->faker
-                ->randomElement([CampaignStatus::FAILED, CampaignStatus::QUEUED, CampaignStatus::SENT]),
-            'provider' => $this->faker->name,
-        ]);
+        /** @var Campaign $campaign */
+        $campaign = factory(Campaign::class)->make(['id' => $this->faker->randomDigitNotNull]);
         $campaignResource = new CampaignResource($campaign);
 
         $this->assertEquals(
             [
                 'id' => $campaign->id,
+                'uuid' => $campaign->uuid,
                 'name' => $campaign->name,
                 'type' => $campaign->type,
                 'content' => $campaign->content,

@@ -4,6 +4,7 @@ import Layouts from '../enums/LayoutEnums';
 import DashboardPage from '../pages/app/dashboard';
 import CampaignPage from '../pages/app/campaign';
 import SettingsPage from '../pages/app/settings';
+import CreateCampaign from '../pages/app/campaign/Create';
 
 Vue.use(VueRouter);
 
@@ -20,6 +21,14 @@ const index = [
         name: 'campaigns',
         path: '/campaigns',
         component: CampaignPage,
+        meta: {
+            layout: Layouts.APP_LAYOUT
+        }
+    },
+    {
+        name: 'campaign-create',
+        path: '/campaigns/create',
+        component: CreateCampaign,
         meta: {
             layout: Layouts.APP_LAYOUT
         }

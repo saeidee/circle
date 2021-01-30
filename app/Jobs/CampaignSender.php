@@ -2,21 +2,18 @@
 
 namespace App\Jobs;
 
+use App\Enums\CircuitEnums;
 use Exception;
 use App\Events\CampaignSent;
 use Illuminate\Bus\Queueable;
-use Illuminate\Support\Carbon;
 use App\Events\CampaignFailed;
 use Illuminate\Support\Facades\Queue;
 use App\Factories\MailProviderFactory;
 use App\Factories\CircuitManagerFactory;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Events\CircuitBreaker\CircuitOpened;
-use App\Events\CircuitBreaker\CircuitClosed;
 use App\ValueObjects\Payloads\CampaignPayload;
 use App\Services\MailProviders\MailProviderSwitcher;
-use App\Events\CircuitBreaker\CircuitMaxAttemptReached;
 
 /**
  * Class Deployer
@@ -25,8 +22,6 @@ use App\Events\CircuitBreaker\CircuitMaxAttemptReached;
 class CampaignSender implements ShouldQueue
 {
     use Queueable, InteractsWithQueue;
-
-    const MAX_ATTEMPT_WAIT = Carbon::SECONDS_PER_MINUTE * 5;
 
     /** @var string */
     private $providerName;
@@ -62,25 +57,15 @@ class CampaignSender implements ShouldQueue
 
         if ($circuitStatus->isMaxAttemptReached()) {
             Queue::later(
-                self::MAX_ATTEMPT_WAIT,
+                CircuitEnums::MAX_ATTEMPT_WAIT,
                 new self($senderSwitcher->switch($this->providerName), $this->campaignPayload)
             );
-
-            event(new CircuitMaxAttemptReached($this->providerName));
 
             return;
         }
 
         if ($circuitStatus->isOpened()) {
             Queue::push(new self($senderSwitcher->switch($provider->getCircuitPrefix()), $this->campaignPayload));
-
-            event(new CircuitOpened($this->providerName));
-
-            return;
-        }
-
-        if ($circuitStatus->wasHalfOpen()) {
-            event(new CircuitClosed($this->providerName));
 
             return;
         }

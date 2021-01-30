@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class CampaignResource
  * @package App\Models
  * @property int id
+ * @property string uuid
  * @property string name
  * @property string content
  * @property string type

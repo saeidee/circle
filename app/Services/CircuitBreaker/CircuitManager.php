@@ -2,7 +2,7 @@
 
 namespace App\Services\CircuitBreaker;
 
-use App\Enums\CircuitStatusEnums;
+use App\Enums\CircuitEnums;
 use GuzzleHttp\Exception\GuzzleException;
 use App\Services\Support\RequesterInterface;
 use App\ValueObjects\CircuitBreaker\CircuitStatus;
@@ -34,28 +34,24 @@ class CircuitManager
      */
     public function makeRequest(): CircuitStatus
     {
-        if ($this->circuitTracker->isOpen()) {
-            return new CircuitStatus(CircuitStatusEnums::OPEN);
+        if ($this->circuitTracker->isReachedMaxAttempt()) {
+            return new CircuitStatus(CircuitEnums::MAX_ATTEMPT_REACHED);
         }
 
-        if ($this->circuitTracker->isReachedMaxAttempt()) {
-            return new CircuitStatus(CircuitStatusEnums::MAX_ATTEMPT_REACHED);
+        if ($this->circuitTracker->isOpen()) {
+            return new CircuitStatus(CircuitEnums::OPEN);
         }
 
         try {
             $this->requester->makeRequest();
 
-            if ($this->circuitTracker->wasHalfOpen()) {
-                $this->circuitTracker->saveSuccess();
-
-                return new CircuitStatus(CircuitStatusEnums::HALF_OPEN);
-            }
+            $this->circuitTracker->saveSuccess();
         } catch (GuzzleException $exception) {
             $this->circuitTracker->saveFailure();
 
-            return new CircuitStatus(CircuitStatusEnums::OPEN);
+            return new CircuitStatus(CircuitEnums::OPEN);
         }
 
-        return new CircuitStatus(CircuitStatusEnums::CLOSE);
+        return new CircuitStatus(CircuitEnums::CLOSE);
     }
 }

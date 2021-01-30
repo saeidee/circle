@@ -2,9 +2,12 @@
 
 namespace App\Services\CircuitBreaker;
 
-use Illuminate\Support\Carbon;
+use App\Enums\CircuitEnums;
 use Illuminate\Support\Facades\Redis;
+use App\Events\CircuitBreaker\CircuitClosed;
+use App\Events\CircuitBreaker\CircuitOpened;
 use App\ValueObjects\CircuitBreaker\CircuitKeys;
+use App\Events\CircuitBreaker\CircuitMaxAttemptReached;
 
 /**
  * Class CircuitTracker
@@ -15,8 +18,6 @@ class CircuitTracker
     const STATUS_VALUE = 1;
     const MAX_ATTEMPTS = 3;
     const INITIAL_MAX_ATTEMPT = 1;
-    const OPEN_TTL = Carbon::SECONDS_PER_MINUTE;
-    const MAX_ATTEMPTS_TTL = Carbon::SECONDS_PER_MINUTE * 5;
 
     /** @var CircuitKeys $keys */
     private $keys;
@@ -35,7 +36,7 @@ class CircuitTracker
      */
     public function isOpen(): bool
     {
-        return Redis::exists($this->keys->getOpenKey());
+        return Redis::exists($this->keys->getOpenKey()) && $this->isReachedMaxAttempt();
     }
 
     /**
@@ -43,7 +44,7 @@ class CircuitTracker
      */
     public function wasHalfOpen(): bool
     {
-        return $this->getAttempts() > self::INITIAL_MAX_ATTEMPT;
+        return Redis::exists($this->keys->getHalfOpenKey());
     }
 
     /**
@@ -59,23 +60,35 @@ class CircuitTracker
      */
     public function saveFailure(): void
     {
-        Redis::setex($this->keys->getOpenKey(), self::STATUS_VALUE, self::OPEN_TTL);
-
-        if (!Redis::exists($this->keys->getAttemptKey())) {
-            Redis::setex($this->keys->getAttemptKey(), self::MAX_ATTEMPTS_TTL, self::INITIAL_MAX_ATTEMPT);
+        if (!$this->isAlreadyOpened()) {
+            $this->openCircuit();
 
             return;
         }
 
-        Redis::incrby($this->keys->getAttemptKey(), 1);
+        if (!$this->hasAlreadyAttempted()) {
+            $this->initializeAttempt();
+
+            return;
+        }
+
+        $this->trackAttempt();
+
+        if ($this->isReachedMaxAttempt()) {
+            event(new CircuitMaxAttemptReached($this->keys->getPrefix()));
+        }
     }
 
-    /*
+    /**
      * @return void
      */
     public function saveSuccess(): void
     {
-        Redis::del($this->keys->getAttemptKey());
+        if ($this->wasHalfOpen()) {
+            event(new CircuitClosed($this->keys->getPrefix()));
+        }
+
+        $this->closeCircuit();
     }
 
     /**
@@ -84,5 +97,56 @@ class CircuitTracker
     protected function getAttempts(): int
     {
         return (int)Redis::get($this->keys->getAttemptKey());
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isAlreadyOpened(): bool
+    {
+        return Redis::exists($this->keys->getOpenKey());
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasAlreadyAttempted(): bool
+    {
+        return Redis::exists($this->keys->getAttemptKey());
+    }
+
+    /**
+     * @return void
+     */
+    protected function initializeAttempt(): void
+    {
+        Redis::setex($this->keys->getAttemptKey(), CircuitEnums::MAX_ATTEMPT_WAIT, self::INITIAL_MAX_ATTEMPT);
+        Redis::set($this->keys->getHalfOpenKey(), self::STATUS_VALUE);
+    }
+
+    /**
+     * @return void
+     */
+    protected function openCircuit(): void
+    {
+        Redis::set($this->keys->getOpenKey(), self::STATUS_VALUE);
+
+        event(new CircuitOpened($this->keys->getPrefix()));
+    }
+
+    /**
+     * @return void
+     */
+    protected function trackAttempt(): void
+    {
+        Redis::incrby($this->keys->getAttemptKey(), 1);
+    }
+
+    /**
+     * @return void
+     */
+    protected function closeCircuit(): void
+    {
+        Redis::del($this->keys->getAttemptKey(), $this->keys->getOpenKey(), $this->keys->getHalfOpenKey());
     }
 }

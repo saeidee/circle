@@ -33,6 +33,7 @@ class CircuitManagerTest extends TestCase
         $requester = $this->createMock(RequesterInterface::class);
         $circuitManager = new CircuitManager($circuitTracker, $requester);
 
+        $circuitTracker->expects($this->once())->method('isReachedMaxAttempt')->willReturn(false);
         $circuitTracker->expects($this->once())->method('isOpen')->willReturn(true);
         $requester->expects($this->never())->method('makeRequest');
 
@@ -49,7 +50,6 @@ class CircuitManagerTest extends TestCase
         $requester = $this->createMock(RequesterInterface::class);
         $circuitManager = new CircuitManager($circuitTracker, $requester);
 
-        $circuitTracker->expects($this->once())->method('isOpen')->willReturn(false);
         $circuitTracker->expects($this->once())->method('isReachedMaxAttempt')->willReturn(true);
         $requester->expects($this->never())->method('makeRequest');
 
@@ -66,30 +66,12 @@ class CircuitManagerTest extends TestCase
         $requester = $this->createMock(RequesterInterface::class);
         $circuitManager = new CircuitManager($circuitTracker, $requester);
 
-        $circuitTracker->expects($this->once())->method('isOpen')->willReturn(false);
         $circuitTracker->expects($this->once())->method('isReachedMaxAttempt')->willReturn(false);
-        $requester->expects($this->once())->method('makeRequest');
-
-        $this->assertEquals(new CircuitStatus(self::CLOSE), $circuitManager->makeRequest());
-    }
-
-    /**
-     * @test
-     * @covers ::makeRequest
-     */
-    function it_should_return_half_open_circuit_status_and_send_the_request()
-    {
-        $circuitTracker = $this->createMock(CircuitTracker::class);
-        $requester = $this->createMock(RequesterInterface::class);
-        $circuitManager = new CircuitManager($circuitTracker, $requester);
-
         $circuitTracker->expects($this->once())->method('isOpen')->willReturn(false);
-        $circuitTracker->expects($this->once())->method('isReachedMaxAttempt')->willReturn(false);
         $requester->expects($this->once())->method('makeRequest');
-        $circuitTracker->expects($this->once())->method('wasHalfOpen')->willReturn(true);
         $circuitTracker->expects($this->once())->method('saveSuccess');
 
-        $this->assertEquals(new CircuitStatus(self::HALF_OPEN), $circuitManager->makeRequest());
+        $this->assertEquals(new CircuitStatus(self::CLOSE), $circuitManager->makeRequest());
     }
 
     /**
@@ -103,8 +85,8 @@ class CircuitManagerTest extends TestCase
         $serverException = $this->createMock(ServerException::class);
         $circuitManager = new CircuitManager($circuitTracker, $requester);
 
-        $circuitTracker->expects($this->once())->method('isOpen')->willReturn(false);
         $circuitTracker->expects($this->once())->method('isReachedMaxAttempt')->willReturn(false);
+        $circuitTracker->expects($this->once())->method('isOpen')->willReturn(false);
         $requester->expects($this->once())->method('makeRequest')->willThrowException($serverException);
         $circuitTracker->expects($this->once())->method('saveFailure');
 

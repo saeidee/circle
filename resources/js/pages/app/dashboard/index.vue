@@ -1,19 +1,17 @@
 <template>
     <div class="mb-5 w-100">
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="font-weight-bold">
-                <h4 class="mb-0 font-weight-bold">Dashboard</h4>
-            </div>
-        </div>
+        <dashboard/>
     </div>
 </template>
 
 <script>
-    export default {
-        name: 'Dashboard',
+    import Dashboard from '../../../components/Dashboard';
 
-        data() {
-            return {};
+    export default {
+        name: 'DashboardPage',
+
+        components: {
+            Dashboard
         },
     }
 </script>

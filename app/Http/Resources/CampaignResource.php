@@ -10,6 +10,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * Class CampaignResource
  * @package App\Http\Resources
  * @property int id
+ * @property int uuid
  * @property string name
  * @property string type
  * @property string content
@@ -32,6 +33,7 @@ class CampaignResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'uuid' => $this->uuid,
             'name' => $this->name,
             'type' => $this->type,
             'content' => $this->content,

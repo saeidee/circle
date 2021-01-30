@@ -1,25 +1,30 @@
 <template>
-    <div class="w-100">
-        <div class="d-flex align-items-baseline">
-            <h4 class="mb-0 font-weight-bold">Campaigns</h4>
-        </div>
+    <div class="mb-5 w-100">
+        <campaigns :campaigns="campaigns"/>
     </div>
 </template>
 
 <script>
-    export default {
-        name: 'Campaigns',
+import { mapState, mapActions } from 'vuex';
+import Campaigns from '../../../components/Campaigns';
 
-        data() {
-            return {};
-        },
+export default {
+    name: 'CampaignsPage',
 
-        methods: {
+    components: {
+        Campaigns
+    },
 
-        }
+    computed: {
+        ...mapState(['campaigns'])
+    },
+
+    beforeMount() {
+        this.fetchCampaigns()
+    },
+
+    methods: {
+        ...mapActions(['fetchCampaigns'])
     }
+}
 </script>
-
-<style>
-
-</style>

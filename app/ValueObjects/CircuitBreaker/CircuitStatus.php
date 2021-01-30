@@ -2,7 +2,7 @@
 
 namespace App\ValueObjects\CircuitBreaker;
 
-use App\Enums\CircuitStatusEnums;
+use App\Enums\CircuitEnums;
 
 /**
  * Class CircuitStatus
@@ -27,7 +27,7 @@ final class CircuitStatus
      */
     public function isOpened(): bool
     {
-        return $this->status === CircuitStatusEnums::OPEN;
+        return $this->status === CircuitEnums::OPEN;
     }
 
     /**
@@ -35,7 +35,7 @@ final class CircuitStatus
      */
     public function wasHalfOpen(): bool
     {
-        return $this->status === CircuitStatusEnums::HALF_OPEN;
+        return $this->status === CircuitEnums::HALF_OPEN;
     }
 
     /**
@@ -43,6 +43,6 @@ final class CircuitStatus
      */
     public function isMaxAttemptReached(): bool
     {
-        return $this->status === CircuitStatusEnums::MAX_ATTEMPT_REACHED;
+        return $this->status === CircuitEnums::MAX_ATTEMPT_REACHED;
     }
 }

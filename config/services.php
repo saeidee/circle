@@ -37,14 +37,14 @@ return [
 
     'sendgrid' => [
         'endpoints' => [
-            'send_email' => 'https://api.sendgrid.com/v3/mail/send',
+            'send_email' => 'https://webhook.site/008a3381-b4bf-483c-9afa-a573d165611d',
         ],
         'secret' => env('SENDGRID_SECRET'),
     ],
 
     'mailjet' => [
         'endpoints' => [
-            'send_email' => 'https://api.mailjet.com/v3.1/send',
+            'send_email' => 'https://webhook.site/008a3381-b4bf-483c-9afa-a573d165611d',
         ],
         'secret' => env('MAILJET_SECRET'),
     ],

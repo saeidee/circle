@@ -9,6 +9,7 @@ namespace App\ValueObjects\CircuitBreaker;
 final class CircuitKeys
 {
     const OPEN_KEY = ':circuit:open';
+    const HALF_OPEN_KEY = ':circuit:half-open';
     const ATTEMPT_KEY = ':circuit:attempts';
 
     /** @var string */
@@ -34,8 +35,24 @@ final class CircuitKeys
     /**
      * @return string
      */
+    public function getHalfOpenKey(): string
+    {
+        return $this->prefix . self::HALF_OPEN_KEY;
+    }
+
+    /**
+     * @return string
+     */
     public function getAttemptKey(): string
     {
         return $this->prefix . self::ATTEMPT_KEY;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrefix(): string
+    {
+        return $this->prefix;
     }
 }

@@ -2,10 +2,8 @@
 
 namespace Tests\Unit\Jobs;
 
+use App\Events\CampaignFailed;
 use App\Events\CampaignSent;
-use App\Events\CircuitBreaker\CircuitClosed;
-use App\Events\CircuitBreaker\CircuitMaxAttemptReached;
-use App\Events\CircuitBreaker\CircuitOpened;
 use App\Factories\CircuitManagerFactory;
 use App\Factories\MailProviderFactory;
 use App\Jobs\CampaignSender;
@@ -74,8 +72,7 @@ class CampaignSenderTest extends TestCase
      */
     function it_should_handle_campaign_sender_when_circuit_status_is_max_attempt_reached()
     {
-        Event::fake();
-
+        Queue::fake();
         $switchedProvider = $this->faker->name;
         $circuitStatus = new CircuitStatus(self::MAX_ATTEMPT_REACHED);
         $provider = $this->createMock(MailSenderInterface::class);
@@ -98,15 +95,6 @@ class CampaignSenderTest extends TestCase
             ->with(self::MAX_ATTEMPT_WAIT, Mockery::type(CampaignSender::class));
 
         $this->campaignSender->handle($this->circuitManagerFactory, $this->mailProviderFactory, $this->senderSwitcher);
-
-        Event::assertDispatched(
-            CircuitMaxAttemptReached::class,
-            function (CircuitMaxAttemptReached $event) {
-                $this->assertProperty($event, 'circuitName', $this->providerName);
-
-                return true;
-            }
-        );
     }
 
     /**
@@ -116,8 +104,6 @@ class CampaignSenderTest extends TestCase
     function it_should_handle_campaign_sender_when_circuit_status_is_open()
     {
         Queue::fake();
-        Event::fake();
-
         $switchedProvider = $this->faker->name;
         $circuitStatus = new CircuitStatus(self::OPEN);
         $provider = $this->createMock(MailSenderInterface::class);
@@ -147,50 +133,6 @@ class CampaignSenderTest extends TestCase
                 return true;
             }
         );
-        Event::assertDispatched(
-            CircuitOpened::class,
-            function (CircuitOpened $event) {
-                $this->assertProperty($event, 'circuitName', $this->providerName);
-
-                return true;
-            }
-        );
-    }
-
-    /**
-     * @test
-     * @covers ::handle
-     */
-    function it_should_handle_campaign_sender_when_circuit_status_is_half_open()
-    {
-        Event::fake();
-
-        $circuitStatus = new CircuitStatus(self::HALF_OPEN);
-        $provider = $this->createMock(MailSenderInterface::class);
-        $circuitManager = $this->createMock(CircuitManager::class);
-
-        $this->mailProviderFactory
-            ->expects($this->once())
-            ->method('make')
-            ->with($this->providerName, $this->campaignPayload)
-            ->willReturn($provider);
-        $this->circuitManagerFactory
-            ->expects($this->once())
-            ->method('make')
-            ->with($provider)
-            ->willReturn($circuitManager);
-        $circuitManager->expects($this->once())->method('makeRequest')->willReturn($circuitStatus);
-
-        $this->campaignSender->handle($this->circuitManagerFactory, $this->mailProviderFactory, $this->senderSwitcher);
-
-        Event::assertDispatched(
-            CircuitClosed::class,
-            function (CircuitClosed $event) {
-                $this->assertProperty($event, 'circuitName', $this->providerName);
-
-                return true;
-            }
-        );
     }
 
     /**
@@ -200,7 +142,6 @@ class CampaignSenderTest extends TestCase
     function it_should_handle_campaign_sender_when_circuit_status_is_close()
     {
         Event::fake();
-
         $circuitStatus = new CircuitStatus(self::CLOSE);
         $provider = $this->createMock(MailSenderInterface::class);
         $circuitManager = $this->createMock(CircuitManager::class);
@@ -222,6 +163,26 @@ class CampaignSenderTest extends TestCase
         Event::assertDispatched(
             CampaignSent::class,
             function (CampaignSent $event) {
+                $this->assertProperty($event, 'provider', $this->providerName);
+                $this->assertProperty($event, 'uuid', $this->campaignPayload->getId());
+
+                return true;
+            }
+        );
+    }
+
+    /**
+     * @test
+     * @covers ::failed
+     */
+    function it_broadcast_campaign_failed_event_when_the_job_failed()
+    {
+        Event::fake();
+        $this->campaignSender->failed();
+
+        Event::assertDispatched(
+            CampaignFailed::class,
+            function (CampaignFailed $event) {
                 $this->assertProperty($event, 'provider', $this->providerName);
                 $this->assertProperty($event, 'uuid', $this->campaignPayload->getId());
 

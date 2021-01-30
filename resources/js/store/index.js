@@ -1,44 +1,43 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { Mutation, Action } from './types';
+import RouteEnums from '../enums/RouteEnums';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        projects: [],
-        project: {'id': '', 'title': '', 'description': ''}
+        campaign: {
+            campaign: '',
+            subject: '',
+            from: { name: '', email: '' },
+            to: [{ name: '', email: '' }],
+            replyTo: { name: '', email: '' },
+            content: { type: '', value: '' }
+        },
+        campaigns: []
     },
 
     mutations: {
-        setProjects(state, projects) {
-            state.projects = projects;
-        },
-
-        deleteProjects({projects}, id) {
-            projects.data.splice(projects.data.indexOf(projects.data.find(project => project.id === id)), 1);
-        },
+        /**
+         * @name setCampaigns
+         * @param state
+         * @param campaigns
+         */
+        [Mutation.SET_CAMPAIGNS](state, campaigns) {
+            state.campaigns = campaigns;
+        }
     },
 
     actions: {
-        fetchProjects(context) {
-            axios.get('/dashboard/projects')
-                .then(response => {
-                    context.commit('setProjects', response.data)
-                });
-        },
+        /**
+         * @name fetchPredefinedRequirements
+         * @param {function} [commit]
+         */
+        async [Action.FETCH_CAMPAIGNS]({ commit }) {
+            const { data } = await window.axios.get(RouteEnums.CAMPAIGNS_URL);
 
-        fetchNextProjects(context) {
-            axios.get(this.state.projects.next_page_url)
-                .then(response => {
-                    context.commit('setProjects', response.data)
-                });
-        },
-
-        fetchPreviousProjects(context) {
-            axios.get(this.state.projects.prev_page_url)
-                .then(response => {
-                    context.commit('setProjects', response.data)
-                });
-        },
+            commit(Mutation.SET_CAMPAIGNS, data.data);
+        }
     }
 });

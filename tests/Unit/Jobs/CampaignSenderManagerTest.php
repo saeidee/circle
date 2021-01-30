@@ -4,7 +4,9 @@ namespace Tests\Unit\Jobs;
 
 use Tests\TestCase;
 use App\Jobs\CampaignSender;
+use App\Events\CampaignFailed;
 use App\Jobs\CampaignSenderManager;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\ValueObjects\Payloads\CampaignPayload;
@@ -53,6 +55,30 @@ class CampaignSenderManagerTest extends TestCase
             function (CampaignSender $campaignSender) use ($providerName, $campaignPayload) {
                 $this->assertProperty($campaignSender, 'providerName', $providerName);
                 $this->assertProperty($campaignSender, 'campaignPayload', $campaignPayload);
+
+                return true;
+            }
+        );
+    }
+
+    /**
+     * @test
+     * @covers ::failed
+     */
+    function it_broadcast_campaign_failed_event_when_the_job_failed()
+    {
+        Event::fake();
+        $providerName = $this->faker->name;
+        $campaignPayload = new CampaignPayload([]);
+        $campaignSender = new CampaignSenderManager($providerName, $campaignPayload);
+
+        $campaignSender->failed();
+
+        Event::assertDispatched(
+            CampaignFailed::class,
+            function (CampaignFailed $event) use ($providerName, $campaignPayload) {
+                $this->assertProperty($event, 'provider', $providerName);
+                $this->assertProperty($event, 'uuid', $campaignPayload->getId());
 
                 return true;
             }
