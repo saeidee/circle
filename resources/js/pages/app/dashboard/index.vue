@@ -3,7 +3,9 @@
         <dashboard
             :failed-count="stats.failed"
             :queued-count="stats.queued"
-            :sent-count="stats.sent"/>
+            :sent-count="stats.sent"
+            :mail-jet-circuit="stats.mailJetCircuit"
+            :send-grid-circuit="stats.sendGridCircuit"/>
     </div>
 </template>
 
@@ -23,7 +25,9 @@
                 stats: {
                     failed: 0,
                     queued: 0,
-                    sent: 0
+                    sent: 0,
+                    sendGridCircuit: false,
+                    mailJetCircuit: false
                 }
             };
         },

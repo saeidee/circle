@@ -22,6 +22,8 @@ class StatsControllerTest extends TestCase
      */
     function it_should_return_stats()
     {
+        $mailJetCircuit = false;
+        $sendGridCircuit = false;
         $sent = $this->faker->numberBetween(1, 10);
         $failed = $this->faker->numberBetween(1, 10);
         $queued = $this->faker->numberBetween(1, 10);
@@ -32,6 +34,7 @@ class StatsControllerTest extends TestCase
 
         $response = $this->get(route('stats'));
 
-        $response->assertOk()->assertExactJson(compact('sent', 'failed', 'queued'));
+        $response->assertOk()
+            ->assertExactJson(compact('sent', 'failed', 'queued', 'sendGridCircuit', 'mailJetCircuit'));
     }
 }

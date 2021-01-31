@@ -8,10 +8,10 @@ use GuzzleHttp\Psr7\Request;
 use App\Factories\RequestFactory;
 use App\Services\Support\Requester;
 use App\Factories\CircuitManagerFactory;
+use App\Factories\CircuitTrackerFactory;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\Services\CircuitBreaker\CircuitManager;
 use App\Services\CircuitBreaker\CircuitTracker;
-use App\ValueObjects\CircuitBreaker\CircuitKeys;
 use App\Services\MailProviders\MailSenderInterface;
 
 /**
@@ -34,17 +34,18 @@ class CircuitManagerFactoryTest extends TestCase
         $client = $this->createMock(Client::class);
         $mailSender = $this->createMock(MailSenderInterface::class);
         $requestFactory = $this->createMock(RequestFactory::class);
+        $circuitTrackerFactory = $this->createMock(CircuitTrackerFactory::class);
+        $circuitTracker = $this->createMock(CircuitTracker::class);
         $request = $this->createMock(Request::class);
-        $keys = new CircuitKeys($prefix);
-        $circuitTracker = new CircuitTracker($keys);
         $requester = new Requester($client, $request);
 
         $requestFactory->expects($this->once())->method('make')->with($mailSender)->willReturn($request);
+        $circuitTrackerFactory->expects($this->once())->method('make')->with($prefix)->willReturn($circuitTracker);
         $mailSender->expects($this->once())->method('getCircuitPrefix')->willReturn($prefix);
 
         $this->assertEquals(
             new CircuitManager($circuitTracker, $requester),
-            (new CircuitManagerFactory($client, $requestFactory))->make($mailSender)
+            (new CircuitManagerFactory($client, $requestFactory, $circuitTrackerFactory))->make($mailSender)
         );
     }
 }

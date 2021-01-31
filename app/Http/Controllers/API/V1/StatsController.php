@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use Illuminate\Http\Response;
-use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use App\Repositories\Campaign\CampaignRepositoryInterface;
+use App\Services\Support\StatsService;
 
 /**
  * Class StatsController
@@ -14,18 +12,11 @@ use App\Repositories\Campaign\CampaignRepositoryInterface;
 class StatsController extends Controller
 {
     /**
-     * @param CampaignRepositoryInterface $campaignRepository
-     * @return JsonResponse
+     * @param StatsService $statsService
+     * @return array
      */
-    public function index(CampaignRepositoryInterface $campaignRepository): JsonResponse
+    public function index(StatsService $statsService): array
     {
-        return new JsonResponse(
-            [
-                'sent' => $campaignRepository->getSentCount(),
-                'failed' => $campaignRepository->getFailedCount(),
-                'queued' => $campaignRepository->getQueuedCount(),
-            ],
-            Response::HTTP_OK
-        );
+        return $statsService->stats();
     }
 }

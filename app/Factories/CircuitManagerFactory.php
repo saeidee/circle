@@ -4,9 +4,7 @@ namespace App\Factories;
 
 use GuzzleHttp\Client;
 use App\Services\Support\Requester;
-use App\ValueObjects\CircuitBreaker\CircuitKeys;
 use App\Services\CircuitBreaker\CircuitManager;
-use App\Services\CircuitBreaker\CircuitTracker;
 use App\Services\MailProviders\MailSenderInterface;
 
 /**
@@ -19,16 +17,23 @@ class CircuitManagerFactory
     private $client;
     /** @var RequestFactory */
     private $requestFactory;
+    /** @var CircuitTrackerFactory */
+    private $circuitTrackerFactory;
 
     /**
      * CircuitManagerFactory constructor.
      * @param Client $client
      * @param RequestFactory $requestFactory
+     * @param CircuitTrackerFactory $circuitTrackerFactory
      */
-    public function __construct(Client $client, RequestFactory $requestFactory)
-    {
+    public function __construct(
+        Client $client,
+        RequestFactory $requestFactory,
+        CircuitTrackerFactory $circuitTrackerFactory
+    ) {
         $this->client = $client;
         $this->requestFactory = $requestFactory;
+        $this->circuitTrackerFactory = $circuitTrackerFactory;
     }
 
     /**
@@ -37,10 +42,9 @@ class CircuitManagerFactory
      */
     public function make(MailSenderInterface $mailSender): CircuitManager
     {
-        $keys = new CircuitKeys($mailSender->getCircuitPrefix());
         $request = $this->requestFactory->make($mailSender);
         $requester = new Requester($this->client, $request);
-        $circuitTracker = new CircuitTracker($keys);
+        $circuitTracker = $this->circuitTrackerFactory->make($mailSender->getCircuitPrefix());
 
         return new CircuitManager($circuitTracker, $requester);
     }

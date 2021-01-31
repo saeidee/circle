@@ -25,6 +25,9 @@
         <server name="DB_DATABASE" value=":memory:"/>
         <server name="MAIL_MAILER" value="array"/>
         <server name="QUEUE_CONNECTION" value="sync"/>
+        <server name="REDIS_HOST" value="circle-redis"/>
+        <server name="REDIS_PORT" value="6379"/>
+        <server name="REDIS_DB" value="16"/>
         <server name="SESSION_DRIVER" value="array"/>
         <server name="TELESCOPE_ENABLED" value="false"/>
     </php>

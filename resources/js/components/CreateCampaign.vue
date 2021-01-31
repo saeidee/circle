@@ -210,15 +210,15 @@
 </template>
 
 <script>
-    import { required, email } from 'vuelidate/lib/validators'
+    import { required, email } from 'vuelidate/lib/validators';
     import CampaignEnums from '../enums/CampaignEnums';
-    import { codemirror } from 'vue-codemirror'
-    import 'codemirror/lib/codemirror.css'
+    import { codemirror } from 'vue-codemirror';
+    import 'codemirror/lib/codemirror.css';
 
-    import 'codemirror/mode/css/css.js'
-    import 'codemirror/mode/xml/xml.js'
-    import 'codemirror/mode/htmlmixed/htmlmixed.js'
-    import 'codemirror/theme/base16-light.css'
+    import 'codemirror/mode/css/css.js';
+    import 'codemirror/mode/xml/xml.js';
+    import 'codemirror/mode/htmlmixed/htmlmixed.js';
+    import 'codemirror/theme/base16-light.css';
 
     export default {
         name: 'CreateCampaign',
