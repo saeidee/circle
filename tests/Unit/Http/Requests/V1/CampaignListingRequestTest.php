@@ -40,7 +40,7 @@ class CampaignListingRequestTest extends TestCase
     {
         return [
             ['page', 'int'],
-            ['prePage', 'int|max:100'],
+            ['perPage', 'int|max:100'],
         ];
     }
 }

@@ -6,6 +6,8 @@ use Mockery;
 use Tests\TestCase;
 use App\Models\Campaign;
 use Mockery\MockInterface;
+use Illuminate\Database\Eloquent\Builder;
+use PHPUnit\Framework\MockObject\MockObject;
 use Illuminate\Foundation\Testing\WithFaker;
 
 /**
@@ -19,6 +21,7 @@ class CampaignTest extends TestCase
 
     const FAILED = 0;
     const SENT = 2;
+    const QUEUED = 1;
 
     /**
      * @test
@@ -54,5 +57,50 @@ class CampaignTest extends TestCase
 
         $this->assertEquals($provider, $campaign->getAttribute('provider'));
         $this->assertEquals(self::FAILED, $campaign->getAttribute('status'));
+    }
+
+    /**
+     * @test
+     * @covers ::scopeQueued
+     */
+    function it_should_filter_queued_campaign()
+    {
+        /** @var MockObject|Builder $builder */
+        $builder = $this->createMock(Builder::class);
+        $campaign = new Campaign();
+
+        $builder->expects($this->once())->method('where')->with('status', self::QUEUED)->willReturnSelf();
+
+        $this->assertInstanceOf(Builder::class, $campaign->scopeQueued($builder));
+    }
+
+    /**
+     * @test
+     * @covers ::scopeFailed
+     */
+    function it_should_filter_failed_campaign()
+    {
+        /** @var MockObject|Builder $builder */
+        $builder = $this->createMock(Builder::class);
+        $campaign = new Campaign();
+
+        $builder->expects($this->once())->method('where')->with('status', self::FAILED)->willReturnSelf();
+
+        $this->assertInstanceOf(Builder::class, $campaign->scopeFailed($builder));
+    }
+
+    /**
+     * @test
+     * @covers ::scopeSent
+     */
+    function it_should_filter_sent_campaign()
+    {
+        /** @var MockObject|Builder $builder */
+        $builder = $this->createMock(Builder::class);
+        $campaign = new Campaign();
+
+        $builder->expects($this->once())->method('where')->with('status', self::SENT)->willReturnSelf();
+
+        $this->assertInstanceOf(Builder::class, $campaign->scopeSent($builder));
     }
 }

@@ -28,4 +28,19 @@ interface CampaignRepositoryInterface
      * @return Campaign|null
      */
     public function findByUuid(string $uuid): ?Campaign;
+
+    /**
+     * @return int
+     */
+    public function getQueuedCount(): int;
+
+    /**
+     * @return int
+     */
+    public function getSentCount(): int;
+
+    /**
+     * @return int
+     */
+    public function getFailedCount(): int;
 }

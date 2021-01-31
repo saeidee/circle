@@ -32,7 +32,7 @@ class CampaignController extends Controller
     ): AnonymousResourceCollection
     {
         return CampaignResource::collection(
-            $campaignRepository->paginate($request->get('prePage', self::DEFAULT_PRE_PAGE))
+            $campaignRepository->paginate($request->get('perPage', self::DEFAULT_PRE_PAGE))
         );
     }
 
@@ -49,6 +49,6 @@ class CampaignController extends Controller
             )
         );
 
-        return $this->success('Successfully CampaignResource created');
+        return $this->success('Successfully Campaign created');
     }
 }

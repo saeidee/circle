@@ -49,4 +49,28 @@ class CampaignRepository implements CampaignRepositoryInterface
     {
         return $this->campaign->where('uuid', $uuid)->first();
     }
+
+    /**
+     * @return int
+     */
+    public function getQueuedCount(): int
+    {
+        return $this->campaign->queued()->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function getSentCount(): int
+    {
+        return $this->campaign->sent()->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function getFailedCount(): int
+    {
+        return $this->campaign->failed()->count();
+    }
 }

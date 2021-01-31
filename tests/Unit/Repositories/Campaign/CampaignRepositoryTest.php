@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Repositories\Campaign;
 
+use Illuminate\Database\Query\Builder;
 use Tests\TestCase;
 use App\Models\Campaign;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -30,7 +31,7 @@ class CampaignRepositoryTest extends TestCase
         parent::setUp();
 
         $this->campaign = $this->getMockBuilder(Campaign::class)
-            ->addMethods(['paginate', 'create', 'where'])
+            ->addMethods(['paginate', 'create', 'where', 'queued', 'sent', 'failed'])
             ->getMock();
         $this->campaignRepository = new CampaignRepository($this->campaign);
     }
@@ -96,5 +97,49 @@ class CampaignRepositoryTest extends TestCase
             ->willReturn(collect([null]));
 
         $this->assertNull($this->campaignRepository->findByUuid($uuid));
+    }
+
+    /**
+     * @test
+     * @covers ::getQueuedCount
+     */
+    function it_should_return_queued_campaigns_count()
+    {
+        $queuedCampaigns = $this->faker->randomDigitNotNull;
+        $builder = $this->createMock(Builder::class);
+
+        $this->campaign->expects($this->once())->method('queued')->willReturn($builder);
+        $builder->expects($this->once())->method('count')->willReturn($queuedCampaigns);
+
+        $this->assertEquals($queuedCampaigns, $this->campaignRepository->getQueuedCount());
+    }
+
+    /**
+     * @test
+     * @covers ::getSentCount
+     */
+    function it_should_return_sent_campaigns_count()
+    {
+        $sentCampaigns = $this->faker->randomDigitNotNull;
+        $builder = $this->createMock(Builder::class);
+
+        $this->campaign->expects($this->once())->method('sent')->willReturn($builder);
+        $builder->expects($this->once())->method('count')->willReturn($sentCampaigns);
+
+        $this->assertEquals($sentCampaigns, $this->campaignRepository->getSentCount());
+    }
+    /**
+     * @test
+     * @covers ::getFailedCount
+     */
+    function it_should_return_failed_campaigns_count()
+    {
+        $failedCampaigns = $this->faker->randomDigitNotNull;
+        $builder = $this->createMock(Builder::class);
+
+        $this->campaign->expects($this->once())->method('failed')->willReturn($builder);
+        $builder->expects($this->once())->method('count')->willReturn($failedCampaigns);
+
+        $this->assertEquals($failedCampaigns, $this->campaignRepository->getFailedCount());
     }
 }
