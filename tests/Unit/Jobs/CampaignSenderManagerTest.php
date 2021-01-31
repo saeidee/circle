@@ -4,10 +4,10 @@ namespace Tests\Unit\Jobs;
 
 use Tests\TestCase;
 use App\Jobs\CampaignSender;
-use App\Events\CampaignFailed;
 use App\Jobs\CampaignSenderManager;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
+use App\Events\Campaign\CampaignFailed;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\ValueObjects\Payloads\CampaignPayload;
 use App\Repositories\Campaign\CampaignRepositoryInterface;

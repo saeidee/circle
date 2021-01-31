@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\CampaignFailed;
+use App\Events\Campaign\CampaignFailed;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Repositories\Campaign\CampaignRepositoryInterface;
 

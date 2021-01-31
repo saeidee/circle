@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Jobs;
 
-use App\Events\CampaignFailed;
-use App\Events\CampaignSent;
+use App\Events\Campaign\CampaignFailed;
+use App\Events\Campaign\CampaignSent;
 use App\Factories\CircuitManagerFactory;
 use App\Factories\MailProviderFactory;
 use App\Jobs\CampaignSender;

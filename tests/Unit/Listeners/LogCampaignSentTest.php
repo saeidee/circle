@@ -4,8 +4,8 @@ namespace Tests\Unit\Listeners;
 
 use Tests\TestCase;
 use App\Models\Campaign;
-use App\Events\CampaignSent;
 use App\Listeners\LogCampaignSent;
+use App\Events\Campaign\CampaignSent;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\Repositories\Campaign\CampaignRepositoryInterface;
 

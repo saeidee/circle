@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use App\Events\CampaignFailed;
-use App\Events\CampaignSent;
-use App\Listeners\LogCampaignFailed;
 use App\Listeners\LogCampaignSent;
-use Illuminate\Auth\Events\Registered;
+use App\Listeners\LogCampaignFailed;
+use App\Events\Campaign\CampaignSent;
 use App\Listeners\NotifyCircuitEvent;
+use Illuminate\Auth\Events\Registered;
+use App\Events\Campaign\CampaignFailed;
 use App\Events\CircuitBreaker\CircuitClosed;
 use App\Events\CircuitBreaker\CircuitOpened;
 use App\Events\CircuitBreaker\CircuitMaxAttemptReached;

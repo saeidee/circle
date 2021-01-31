@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Campaign;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 /**
  * Class CampaignSent
- * @package App\Events
+ * @package App\Events\Campaign
  */
 class CampaignSent implements ShouldQueue
 {

@@ -2,9 +2,9 @@
 
 namespace App\Listeners;
 
-use App\Events\CampaignSent;
-use App\Repositories\Campaign\CampaignRepositoryInterface;
+use App\Events\Campaign\CampaignSent;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Repositories\Campaign\CampaignRepositoryInterface;
 
 /**
  * Class LogCampaignSent

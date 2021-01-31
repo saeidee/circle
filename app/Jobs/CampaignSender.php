@@ -2,13 +2,13 @@
 
 namespace App\Jobs;
 
-use App\Enums\CircuitEnums;
 use Exception;
-use App\Events\CampaignSent;
+use App\Enums\CircuitEnums;
 use Illuminate\Bus\Queueable;
-use App\Events\CampaignFailed;
 use Illuminate\Support\Facades\Queue;
+use App\Events\Campaign\CampaignSent;
 use App\Factories\MailProviderFactory;
+use App\Events\Campaign\CampaignFailed;
 use App\Factories\CircuitManagerFactory;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;

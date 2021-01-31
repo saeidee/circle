@@ -2,9 +2,9 @@
 
 namespace App\Jobs;
 
-use App\Events\CampaignFailed;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Queue;
+use App\Events\Campaign\CampaignFailed;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\ValueObjects\Payloads\CampaignPayload;
 use App\Repositories\Campaign\CampaignRepositoryInterface;
