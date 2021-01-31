@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Queue;
 use App\Http\Resources\CampaignResource;
 use App\ValueObjects\Payloads\CampaignPayload;
 use App\Http\Requests\API\V1\SendCampaignRequest;
+use App\Http\Requests\API\V1\CampaignListingRequest;
 use App\Repositories\Campaign\CampaignRepositoryInterface;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -18,13 +19,21 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
  */
 class CampaignController extends Controller
 {
+    const DEFAULT_PRE_PAGE = 5;
+
     /**
+     * @param CampaignListingRequest $request
      * @param CampaignRepositoryInterface $campaignRepository
      * @return AnonymousResourceCollection
      */
-    public function index(CampaignRepositoryInterface $campaignRepository): AnonymousResourceCollection
+    public function index(
+        CampaignListingRequest $request,
+        CampaignRepositoryInterface $campaignRepository
+    ): AnonymousResourceCollection
     {
-        return CampaignResource::collection($campaignRepository->paginate());
+        return CampaignResource::collection(
+            $campaignRepository->paginate($request->get('prePage', self::DEFAULT_PRE_PAGE))
+        );
     }
 
     /**

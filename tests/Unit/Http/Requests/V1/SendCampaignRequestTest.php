@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Requests\API\V1;
+namespace Tests\Unit\Http\Requests\API\V1;
 
 use Tests\TestCase;
 use App\Http\Requests\API\V1\SendCampaignRequest;

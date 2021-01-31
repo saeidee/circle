@@ -12,9 +12,10 @@ use Illuminate\Pagination\LengthAwarePaginator;
 interface CampaignRepositoryInterface
 {
     /**
+     * @param int $prePage
      * @return LengthAwarePaginator
      */
-    public function paginate(): LengthAwarePaginator;
+    public function paginate(int $prePage): LengthAwarePaginator;
 
     /**
      * @param array $fields

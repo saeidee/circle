@@ -16,5 +16,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'API\V1', 'prefix' => 'v1'], function (Router $route) {
     $route->get('/campaigns', 'CampaignController@index');
-    $route->post('/campaigns', 'CampaignController@store');
+    $route->middleware('refine.mail.content')->post('/campaigns', 'CampaignController@store');
 });

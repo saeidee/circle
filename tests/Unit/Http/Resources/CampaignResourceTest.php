@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Resources;
+namespace Tests\Unit\Http\Resources;
 
 use Tests\TestCase;
 use App\Models\Campaign;

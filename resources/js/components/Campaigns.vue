@@ -5,7 +5,7 @@
                 <h4 class="mb-0 font-weight-bold">Campaigns</h4>
                 <div class="mb-0 font-weight-bold">
                     <b-button variant="link" :to="{ name: 'campaign-create' }">
-                        <b-icon icon="plus"></b-icon> New Campaign
+                        <b-icon icon="plus"/> New Campaign
                     </b-button>
                 </div>
             </div>
@@ -13,6 +13,12 @@
         <div class="my-5 rounded-items base-shadow">
             <b-table hover :items="preparedCampaigns" :fields="fields"></b-table>
         </div>
+        <b-pagination
+            :value="paginationMeta.current_page"
+            :total-rows="paginationMeta.total"
+            :per-page="paginationMeta.per_page"
+            @change="page => $emit('pageChanged', page)"
+        ></b-pagination>
     </div>
 </template>
 
@@ -28,6 +34,14 @@
              */
             campaigns: {
                 type: Array,
+                required: true
+            },
+
+            /**
+             * @property {Object} paginationMeta
+             */
+            paginationMeta: {
+                type: Object,
                 required: true
             }
         },

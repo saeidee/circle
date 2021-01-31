@@ -24,11 +24,12 @@ class CampaignRepository implements CampaignRepositoryInterface
     }
 
     /**
+     * @param int $prePage
      * @return LengthAwarePaginator
      */
-    public function paginate(): LengthAwarePaginator
+    public function paginate(int $prePage): LengthAwarePaginator
     {
-        return $this->campaign->paginate();
+        return $this->campaign->paginate($prePage);
     }
 
     /**

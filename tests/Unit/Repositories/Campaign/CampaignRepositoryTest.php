@@ -42,11 +42,12 @@ class CampaignRepositoryTest extends TestCase
      */
     function it_should_paginate_all_campaigns()
     {
+        $prePage = $this->faker->randomDigitNotNull;
         $lengthAwarePaginator = $this->createMock(LengthAwarePaginator::class);
 
-        $this->campaign->expects($this->once())->method('paginate')->willReturn($lengthAwarePaginator);
+        $this->campaign->expects($this->once())->method('paginate')->with($prePage)->willReturn($lengthAwarePaginator);
 
-        $this->assertEquals($lengthAwarePaginator, $this->campaignRepository->paginate());
+        $this->assertEquals($lengthAwarePaginator, $this->campaignRepository->paginate($prePage));
     }
 
     /**

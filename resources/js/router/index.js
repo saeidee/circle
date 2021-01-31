@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router'
 import Layouts from '../enums/LayoutEnums';
-import DashboardPage from '../pages/app/dashboard';
 import CampaignPage from '../pages/app/campaign';
 import SettingsPage from '../pages/app/settings';
+import DashboardPage from '../pages/app/dashboard';
 import CreateCampaign from '../pages/app/campaign/Create';
 
 Vue.use(VueRouter);
@@ -46,6 +46,5 @@ const index = [
 export default new VueRouter({
     base: '/',
     mode: 'history',
-    routes: index,
-    linkActiveClass: 'active'
+    routes: index
 });

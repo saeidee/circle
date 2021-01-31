@@ -1,6 +1,11 @@
 <template>
     <div class="mb-5 w-100">
-        <campaigns :campaigns="campaigns"/>
+        <campaigns
+            v-if="campaigns.data"
+            :campaigns="campaigns.data"
+            :pagination-meta="campaigns.meta"
+            @pageChanged="fetchCampaigns"
+        />
     </div>
 </template>
 

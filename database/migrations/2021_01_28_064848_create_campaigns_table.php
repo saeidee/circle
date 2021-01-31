@@ -20,7 +20,7 @@ class CreateCampaignsTable extends Migration
             $table->id();
             $table->uuid('uuid');
             $table->string('name');
-            $table->string('content');
+            $table->text('content');
             $table->string('type');
             $table->string('provider')
                 ->nullable()
