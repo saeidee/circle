@@ -93,8 +93,8 @@ as sent
 __Note:__ When one of the circuits' status is changing we are sending alert message to slack, so we will be aware of it.
 
 One more important thing is that for each campaign we are generating an uuid identifier, we are sending this uuid to 
-the providers within the payload, this uuid can help us to get the statistics about a specific campaign like 
-bounced users, delivered, clicks etc.
+the providers within the payload, this uuid can help us to track the campaign on the provider side or get 
+the statistics like bounced users, delivered, clicks etc.
 
 #### REST API
 
@@ -171,3 +171,15 @@ You can use the following command to run the test.
 ```
  vendor/bin/phpunit --filter .
 ```
+
+### Front-End
+For front-end part I am using __Atomic Design__, where we have template components and data provider components,
+as you can see from the codebase our data provider components are pages.
+
+I used bootstrap-vue as a design system which has already builtin components. also, I used the vuex for manging the 
+application state.
+
+For emails which has html content I used codemirror package which is providing a nice editor for any programming
+language.
+
+If you had any question or problem please let me know via this email: _sk.saeidee@yahoo.com_
