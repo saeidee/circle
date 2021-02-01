@@ -10,26 +10,26 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import Campaigns from '../../../components/Campaigns';
+    import { mapState, mapActions } from 'vuex';
+    import Campaigns from '../../../components/Campaigns';
 
-export default {
-    name: 'CampaignsPage',
+    export default {
+        name: 'CampaignsPage',
 
-    components: {
-        Campaigns
-    },
+        components: {
+            Campaigns
+        },
 
-    computed: {
-        ...mapState(['campaigns'])
-    },
+        computed: {
+            ...mapState(['campaigns'])
+        },
 
-    beforeMount() {
-        this.fetchCampaigns()
-    },
+        beforeMount() {
+            this.fetchCampaigns()
+        },
 
-    methods: {
-        ...mapActions(['fetchCampaigns'])
+        methods: {
+            ...mapActions(['fetchCampaigns'])
+        }
     }
-}
 </script>

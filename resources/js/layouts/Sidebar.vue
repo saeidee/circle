@@ -37,24 +37,9 @@
     body {
         font-size: .875rem;
     }
-
     .py-2-5{
         padding: .85rem;
     }
-    .mr-2-4{
-        margin-right: .75rem;
-    }
-
-    .size-5 {
-        height: 1rem;
-        width: 1rem;
-    }
-
-    .active {
-        background: #edecf3;
-        color: #101010 !important;
-    }
-
     .sidebar {
         position: fixed;
         top: 0;

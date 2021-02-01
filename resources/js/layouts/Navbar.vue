@@ -25,13 +25,4 @@
     .z-index {
         z-index: 1;
     }
-
-    .size-5 {
-        height: 1rem;
-        width: 1rem;
-    }
-
-    .footer-alignment {
-        padding-left: 72px;
-    }
 </style>

@@ -51,7 +51,7 @@
              * @return {array}
              */
             preparedCampaigns () {
-                return this.campaigns.map((campaign) => {
+                return this.campaigns.map(campaign => {
                     return { ...campaign, _cellVariants: { status: this.getStatusIndicator(campaign.status) }}
                 })
             }
