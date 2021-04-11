@@ -41,8 +41,8 @@ enabled:
   - phpdoc_single_line_var_spacing
   - whitespace_after_comma_in_array
   - no_useless_else
-  - phpdoc_return_self_reference
   - phpdoc_types
+  - phpdoc_return_self_reference
   - phpdoc_types_null_last
 disabled:
   - method_visibility_required
