@@ -29,8 +29,7 @@ class CampaignController extends Controller
     public function index(
         CampaignListingRequest $request,
         CampaignRepositoryInterface $campaignRepository
-    ): AnonymousResourceCollection
-    {
+    ): AnonymousResourceCollection {
         return CampaignResource::collection(
             $campaignRepository->paginate($request->get('perPage', self::DEFAULT_PRE_PAGE))
         );

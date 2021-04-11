@@ -16,8 +16,8 @@ class MailProviderSwitcher
 
     /**
      * @param string $current
-     * @return string
      * @throws Exception
+     * @return string
      */
     public function switch(string $current): string
     {

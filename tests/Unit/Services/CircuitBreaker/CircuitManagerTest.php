@@ -9,7 +9,6 @@ use App\Services\Support\RequesterInterface;
 use App\Services\CircuitBreaker\CircuitManager;
 use App\Services\CircuitBreaker\CircuitTracker;
 
-
 /**
  * Class CircuitManagerTest
  * @package Tests\Unit\Services\CircuitBreaker

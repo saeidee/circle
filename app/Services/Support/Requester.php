@@ -30,8 +30,8 @@ class Requester implements RequesterInterface
     }
 
     /**
-     * @return ResponseInterface
      * @throws GuzzleException
+     * @return ResponseInterface
      */
     public function makeRequest(): ResponseInterface
     {

@@ -12,8 +12,8 @@ use GuzzleHttp\Exception\GuzzleException;
 interface RequesterInterface
 {
     /**
-     * @return ResponseInterface
      * @throws GuzzleException
+     * @return ResponseInterface
      */
     public function makeRequest(): ResponseInterface;
 }

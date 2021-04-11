@@ -235,5 +235,5 @@ return [
 
     // Custom environmental variables
 
-    'initial_preferred_mail_provider' => env('INITIAL_PREFERRED_MAIL_PROVIDER', 'sendgrid')
+    'initial_preferred_mail_provider' => env('INITIAL_PREFERRED_MAIL_PROVIDER', 'sendgrid'),
 ];

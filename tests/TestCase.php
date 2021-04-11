@@ -15,8 +15,8 @@ abstract class TestCase extends BaseTestCase
      * @param object &$object Instantiated object that we will run method on.
      * @param string $methodName Method name to all call.
      * @param array $parameters Array of parameters to be pass into method.
-     * @return mixed Method return.
      * @throws ReflectionException
+     * @return mixed Method return.
      */
     protected function invokeMethod(&$object, string $methodName, array $parameters = [])
     {
@@ -42,8 +42,8 @@ abstract class TestCase extends BaseTestCase
      * For getting private or protected property of an object
      * @param mixed $object
      * @param string $property
-     * @return mixed
      * @throws ReflectionException
+     * @return mixed
      */
     public function getPrivateProperty($object, string $property)
     {

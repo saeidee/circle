@@ -73,7 +73,7 @@ class MailJetTest extends TestCase
                 [
                     'From' => [
                         'Email' => $this->mail->getFrom()->getEmail(),
-                        'Name' => $this->mail->getFrom()->getName()
+                        'Name' => $this->mail->getFrom()->getName(),
                     ],
                     'To' => $to,
                     'Subject' => $this->mail->getSubject(),
@@ -116,7 +116,7 @@ class MailJetTest extends TestCase
                 [
                     'From' => [
                         'Email' => $mail->getFrom()->getEmail(),
-                        'Name' => $mail->getFrom()->getName()
+                        'Name' => $mail->getFrom()->getName(),
                     ],
                     'To' => $to,
                     'Subject' => $mail->getSubject(),

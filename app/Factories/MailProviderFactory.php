@@ -19,8 +19,8 @@ class MailProviderFactory
     /**
      * @param string $provider
      * @param CampaignPayload $campaignPayload
-     * @return MailSenderInterface
      * @throws Exception
+     * @return MailSenderInterface
      */
     public function make(string $provider, CampaignPayload $campaignPayload): MailSenderInterface
     {
