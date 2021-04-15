@@ -43,8 +43,8 @@ class CampaignSender implements ShouldQueue
      * @param CircuitManagerFactory $circuitManagerFactory
      * @param MailProviderFactory $mailProviderFactory
      * @param MailProviderSwitcher $senderSwitcher
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function handle(
         CircuitManagerFactory $circuitManagerFactory,

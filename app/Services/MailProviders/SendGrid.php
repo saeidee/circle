@@ -47,13 +47,13 @@ class SendGrid implements MailSenderInterface
         );
 
         return collect([
-              'personalizations' => [
+            'personalizations' => [
                 ['to' => $to, 'subject' => $this->mail->getSubject()],
-              ],
-              'from' => $this->mail->getFrom()->toArray(),
-              'reply_to' => $this->mail->getReplyTo()->toArray(),
-              'content' => [$this->mail->getContent()->toArray()],
-              'categories' => [$this->mail->getId()],
+            ],
+            'from' => $this->mail->getFrom()->toArray(),
+            'reply_to' => $this->mail->getReplyTo()->toArray(),
+            'content' => [$this->mail->getContent()->toArray()],
+            'categories' => [$this->mail->getId()],
         ]);
     }
 

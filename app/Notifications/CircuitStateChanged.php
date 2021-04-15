@@ -55,4 +55,3 @@ class CircuitStateChanged extends Notification implements ShouldQueue
         return new SlackMessage();
     }
 }
-

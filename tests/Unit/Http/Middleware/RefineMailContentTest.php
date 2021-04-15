@@ -45,7 +45,7 @@ class RefineMailContentTest extends TestCase
 
         $refineMailContent->handle(
             $request,
-            function (Request $refinedRequest) use($request) {
+            function (Request $refinedRequest) use ($request) {
                 $this->assertEquals($request, $refinedRequest);
             }
         );

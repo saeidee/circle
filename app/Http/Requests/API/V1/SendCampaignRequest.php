@@ -26,7 +26,7 @@ class SendCampaignRequest extends Request
             'to.*.email' => 'required|email',
             'replyTo.name' => 'required|string',
             'replyTo.email' => 'required|email',
-            'content.type' => 'required|in:' . implode(',',EmailTypeEnums::ALL),
+            'content.type' => 'required|in:' . implode(',', EmailTypeEnums::ALL),
             'content.value' => 'required|string',
         ];
     }

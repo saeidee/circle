@@ -12,6 +12,6 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        '/auto-deploy-endpoint'
+        '/auto-deploy-endpoint',
     ];
 }

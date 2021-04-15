@@ -56,19 +56,19 @@ class MailJet implements MailSenderInterface
         }
 
         return collect([
-          'Messages' => [
-            [
-              'From' => [
-                'Email' => $this->mail->getFrom()->getEmail(),
-                'Name' => $this->mail->getFrom()->getName()
-              ],
-              'To' => $to,
-              'Subject' => $this->mail->getSubject(),
-              'TextPart' => $textPart,
-              'HTMLPart' => $htmlPart,
-              'CustomID' => $this->mail->getId(),
+            'Messages' => [
+                [
+                    'From' => [
+                        'Email' => $this->mail->getFrom()->getEmail(),
+                        'Name' => $this->mail->getFrom()->getName(),
+                    ],
+                    'To' => $to,
+                    'Subject' => $this->mail->getSubject(),
+                    'TextPart' => $textPart,
+                    'HTMLPart' => $htmlPart,
+                    'CustomID' => $this->mail->getId(),
+                ],
             ],
-          ],
         ]);
     }
 

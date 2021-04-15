@@ -38,11 +38,11 @@ enabled:
   - object_operator_without_whitespace
   - phpdoc_add_missing_param_annotation
   - phpdoc_indent
-  - phpdoc_single_line_var_spacing
   - whitespace_after_comma_in_array
+  - phpdoc_single_line_var_spacing
   - no_useless_else
-  - phpdoc_return_self_reference
   - phpdoc_types
+  - phpdoc_return_self_reference
   - phpdoc_types_null_last
 disabled:
   - method_visibility_required

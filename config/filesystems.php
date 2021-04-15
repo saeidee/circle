@@ -51,7 +51,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
 
@@ -65,77 +65,77 @@ return [
         'projectCover' => [
             'driver' => 'local',
             'root' => storage_path('app/public/projectCover'),
-            'url' => env('APP_URL').'/storage/public/projectCover',
+            'url' => env('APP_URL') . '/storage/public/projectCover',
             'visibility' => 'public',
         ],
 
         'sceneVideo' => [
             'driver' => 'local',
             'root' => storage_path('app/public/sceneVideo'),
-            'url' => env('APP_URL').'/storage/public/sceneVideo',
+            'url' => env('APP_URL') . '/storage/public/sceneVideo',
             'visibility' => 'public',
         ],
 
         'sceneCover' => [
             'driver' => 'local',
             'root' => storage_path('app/public/sceneCover'),
-            'url' => env('APP_URL').'/storage/public/sceneCover',
+            'url' => env('APP_URL') . '/storage/public/sceneCover',
             'visibility' => 'public',
         ],
 
         'projectModule' => [
             'driver' => 'local',
             'root' => storage_path('app/public/projectModule'),
-            'url' => env('APP_URL').'/storage/public/projectModule',
+            'url' => env('APP_URL') . '/storage/public/projectModule',
             'visibility' => 'public',
         ],
 
         'projectInfo' => [
             'driver' => 'local',
             'root' => storage_path('app/public/projectInfo'),
-            'url' => env('APP_URL').'/storage/public/projectInfo',
+            'url' => env('APP_URL') . '/storage/public/projectInfo',
             'visibility' => 'public',
         ],
 
         'companyLogo' => [
             'driver' => 'local',
             'root' => storage_path('app/public/companyLogo'),
-            'url' => env('APP_URL').'/storage/public/companyLogo',
+            'url' => env('APP_URL') . '/storage/public/companyLogo',
             'visibility' => 'public',
         ],
 
         'productCover' => [
             'driver' => 'local',
             'root' => storage_path('app/public/productCover'),
-            'url' => env('APP_URL').'/storage/public/productCover',
+            'url' => env('APP_URL') . '/storage/public/productCover',
             'visibility' => 'public',
         ],
 
         'campaignCover' => [
             'driver' => 'local',
             'root' => storage_path('app/public/campaignCover'),
-            'url' => env('APP_URL').'/storage/public/campaignCover',
+            'url' => env('APP_URL') . '/storage/public/campaignCover',
             'visibility' => 'public',
         ],
 
         'productInfo' => [
             'driver' => 'local',
             'root' => storage_path('app/public/productInfo'),
-            'url' => env('APP_URL').'/storage/public/productInfo',
+            'url' => env('APP_URL') . '/storage/public/productInfo',
             'visibility' => 'public',
         ],
 
         'productModel' => [
             'driver' => 'local',
             'root' => storage_path('app/public/productModel'),
-            'url' => env('APP_URL').'/storage/public/productModel',
+            'url' => env('APP_URL') . '/storage/public/productModel',
             'visibility' => 'public',
         ],
 
         'projectModel' => [
             'driver' => 'local',
             'root' => storage_path('app/public/projectModel'),
-            'url' => env('APP_URL').'/storage/public/projectModel',
+            'url' => env('APP_URL') . '/storage/public/projectModel',
             'visibility' => 'public',
         ],
 
