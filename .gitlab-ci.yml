@@ -8,7 +8,27 @@ cache:
 before_script:
 # Install git, the php image doesn't have installed
 - apt-get update -yqq
-- apt-get install git -yqq
+- apt-get install -y \
+    openssl \
+    zip \
+    unzip \
+    git \
+    supervisor \
+    libmcrypt-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    apt-transport-https \
+    gnupg \
+    jpegoptim \
+    optipng \
+    pngquant \
+    ffmpeg \
+    gifsicle  \
+    zlib1g-dev \
+    libzip-dev \
+    libonig-dev \
+    cron
+
 
 # Install & setup drivers
 - docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
