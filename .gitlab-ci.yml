@@ -26,5 +26,5 @@ before_script:
 
 run-unit-tests:
   script:
-  - vendor/bin/phpunit --coverage-text
+  - vendor/bin/phpunit --testsuite Unit
 

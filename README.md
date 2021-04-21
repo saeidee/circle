@@ -23,7 +23,7 @@ docker exec -it circle-fpm bash
 ```
 Copy .env file and install dependencies
 ```
-cp .env-example .env
+cp .env.example .env
 composer install
 npm i && npm run dev
 ```
