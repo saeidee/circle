@@ -8,7 +8,7 @@ cache:
 before_script:
 # Install git, the php image doesn't have installed
 - apt-get update -yqq
-- apt-get install -y \
+- apt-get install -yqq \
     openssl \
     zip \
     unzip \
