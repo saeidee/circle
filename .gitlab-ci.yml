@@ -1,4 +1,4 @@
-image: php:7.4
+image: php:7.4-fpm
 
 # Select what we should cache
 cache:
@@ -28,7 +28,6 @@ before_script:
     libzip-dev \
     libonig-dev \
     cron
-
 
 # Install & setup drivers
 - docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
