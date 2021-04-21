@@ -25,9 +25,9 @@ class NotifyCircuitEvent implements ShouldQueue
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function routeNotificationForSlack(): string
+    public function routeNotificationForSlack(): ?string
     {
         return config('services.slack.endpoint');
     }
