@@ -10,8 +10,13 @@ before_script:
 - apt-get update -yqq
 - apt-get install git -yqq
 
-# Install mysql driver
+# Install & setup drivers
+- docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
 - docker-php-ext-install -j$(nproc) gd pdo mbstring pdo_mysql exif pcntl zip bcmath
+- pecl install -o -f redis \
+    &&  rm -rf /tmp/pear \
+    &&  docker-php-ext-enable redis
+- pecl install pcov && docker-php-ext-enable pcov
 
 # Install composer
 - curl -sS https://getcomposer.org/installer | php
