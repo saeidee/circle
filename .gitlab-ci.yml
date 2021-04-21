@@ -8,7 +8,9 @@ cache:
 before_script:
 # Install git, the php image doesn't have installed
 - apt-get update -yqq
-- apt-get install -yqq openssl zip unzip git supervisor libmcrypt-dev libfreetype6-dev libjpeg62-turbo-dev apt-transport-https gnupg jpegoptim optipng pngquant ffmpeg gifsicle zlib1g-dev libzip-dev libonig-dev
+- apt-get install -yqq openssl zip unzip git supervisor libmcrypt-dev libfreetype6-dev
+  libjpeg62-turbo-dev apt-transport-https gnupg jpegoptim optipng pngquant ffmpeg gifsicle
+  zlib1g-dev libzip-dev libonig-dev
 
 # Install & setup drivers
 - docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
@@ -26,5 +28,5 @@ before_script:
 
 run-unit-tests:
   script:
-  - vendor/bin/phpunit --testsuite Unit
+  - vendor/bin/phpunit --testsuite Unit --coverage-text
 
