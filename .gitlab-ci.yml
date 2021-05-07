@@ -1,17 +1,33 @@
 image: docker:latest
+
 services:
   - docker:dind
 
+before_script:
+  - docker info
+  - curl -L "https://github.com/docker/compose/releases/download/1.10.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  - chmod +x /usr/local/bin/docker-compose
+  - export PATH=/usr/local/bin:$PATH
+  - echo $PATH
+
 stages:
+  - build
   - test
 
-run-unit-tests:
-  stage: test
+build-containers:
+  stage: build
   script:
-    - pip install docker-compose
+    - apk add --no-cache python py2-pip
+    - pip install --no-cache-dir docker-compose
     - docker image prune -f
     - docker-compose -f docker-compose.yml build --no-cache
     - docker-compose -f docker-compose.yml up -d
+    - docker exec -it circle-fpm bash
+    - vendor/bin/phpunit .
+
+run-tests:
+  stage: test
+  script:
     - docker exec -it circle-fpm bash
     - vendor/bin/phpunit .
 
