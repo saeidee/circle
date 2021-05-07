@@ -15,10 +15,17 @@ build-containers:
   script:
     - apk add docker-compose
     - docker image prune -f
-    - docker-compose -f docker-compose.yml build --no-cache
-    - docker-compose -f docker-compose.yml up -d
+    - docker-compose build --no-cache
+    - docker-compose up -d
+
+handle-dependencies:
+  stage: build
+  script:
     - docker exec -it circle-fpm bash
-    - vendor/bin/phpunit .
+    - cp .env.example .env
+    - composer intall
+    - npm i && npm run dev
+    - php artisan migrate
 
 run-tests:
   stage: test
