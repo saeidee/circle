@@ -7,23 +7,18 @@ before_script:
   - docker info
 
 stages:
-  - build
   - test
 
-build-containers:
-  stage: build
+test:
+  stage: test
   script:
     - apk add docker-compose
     - docker image prune -f
     - docker-compose build --no-cache
     - docker-compose up -d
-#    - docker exec circle-fpm cp .env.example .env
-#    - docker exec circle-fpm composer install
+    - docker exec circle-fpm cp .env.example .env
+    - docker exec circle-fpm composer install
     - docker ps
 #    - docker exec circle-fpm php artisan migrate
-
-run-tests:
-  stage: test
-  script:
     - docker exec circle-fpm vendor/bin/phpunit .
 
