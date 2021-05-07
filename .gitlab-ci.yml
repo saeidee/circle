@@ -8,10 +8,10 @@ stages:
 run-unit-tests:
   stage: test
   script:
-    - sudo pip install docker-compose
-    - sudo docker image prune -f
-    - sudo docker-compose -f docker-compose.yml build --no-cache
-    - sudo docker-compose -f docker-compose.yml up -d
-    - sudo docker exec -it circle-fpm bash
+    - pip install docker-compose
+    - docker image prune -f
+    - docker-compose -f docker-compose.yml build --no-cache
+    - docker-compose -f docker-compose.yml up -d
+    - docker exec -it circle-fpm bash
     - vendor/bin/phpunit .
 
