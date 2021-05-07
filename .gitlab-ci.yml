@@ -1,30 +1,6 @@
-image: php:7.4-fpm
-
-# Select what we should cache
-cache:
-  paths:
-  - vendor/
-
-before_script:
-# Install git, the php image doesn't have installed
-- apt-get update -yqq
-- apt-get install -yqq openssl zip unzip git supervisor libmcrypt-dev libfreetype6-dev
-  libjpeg62-turbo-dev apt-transport-https gnupg jpegoptim optipng pngquant ffmpeg gifsicle
-  zlib1g-dev libzip-dev libonig-dev
-
-# Install & setup drivers
-- docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
-- docker-php-ext-install -j$(nproc) gd pdo mbstring pdo_mysql exif pcntl zip bcmath
-- pecl install -o -f redis \
-    &&  rm -rf /tmp/pear \
-    &&  docker-php-ext-enable redis
-- pecl install pcov && docker-php-ext-enable pcov
-
-# Install composer
-- curl -sS https://getcomposer.org/installer | php
-
-# Install all project dependencies
-- php composer.phar install
+image:
+  name: docker/compose:1.23.2
+  entrypoint: [""]
 
 run-unit-tests:
   script:
