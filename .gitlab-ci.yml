@@ -18,7 +18,6 @@ run-tests:
     - docker-compose up -d
     - docker exec circle-fpm cp .env.example .env
     - docker exec circle-fpm composer install
-    - docker ps
-    - docker exec circle-fpm php artisan migrate
+#    - docker exec circle-fpm php artisan migrate
     - docker exec circle-fpm vendor/bin/phpunit
 
