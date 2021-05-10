@@ -20,5 +20,5 @@ test:
     - docker exec circle-fpm composer install
     - docker ps
 #    - docker exec circle-fpm php artisan migrate
-    - docker exec circle-fpm vendor/bin/phpunit .
+    - docker exec circle-fpm vendor/bin/phpunit
 
